@@ -1,0 +1,157 @@
+<html>
+	<head>
+		<script type="text/javascript" src="fancy-settings/source/lib/store.js"></script>
+		<div id="templates">
+			<div data-name="navigation">
+				<div id="ctl00_ctl00_cphRoblox_subMenu" class="forum-sub-menu" />
+					<ul>
+						<li class="breadcrumb">
+							<ul>
+								{{each breadcrumb}}
+								<li><a href="${$value.href}">${$value.name}</a></li>
+								{{/each}}
+							</ul>
+						</li>
+						<li>
+							<a target="_blank" href="${optionsPage}"><img title="Settings" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAARCAYAAADUryzEAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuODc7gF0AAAGwSURBVDhPjVNBSwJhEBXFEBY97s27pw4dCsI/EFgkBBXZbwi6FSFdUgiECLpF0EVoQZYEQZCwXPSgh9jWQyJFXboqihdFbJ59I9+uKyQMft+b997Ozsx6PAt+k8lkh+JHxP4i3gwnokIRZ6DRaKTYwLKsa8bBoQjYDCEeDod5IbhE0jTNOzZoNpsPwOieBjYejx9tJp1OZ1sqF2VbjvscNhgMtmZVKIqyXCqVKi4i7oHtH1xo5NfwhkKhvX6//8Um3W73Q9f1JwTOjIMDLom9UwNKbFAkqAcnTOr1ep+RSOSC0psInIFxXnAT0MJgrsxsNpsnYVAqMQjMjetqUK/Xb51zB+ZqkMlk9EKh8FytVmtMoA6/01mVZq8KbFqtYRg1aKAFZ50i7vf7D+Um0qxNIp8i6PwqN5G4B9AI7d9zRqPR1X/HCK5zE2OymMr9dpq5YLGZSTQaXWu3228QYUl8Pt855s8mxWLxBRgvW6vVMqGRqwiEw+HjZDKp0fvtYklIdMMG5XL5Hhhy4KiqekR3+wclgBXeME3Tztggl8ulxNOwfeAsOcfsdgcxLWJ1keAX3J9gP+YFh34AAAAASUVORK5CYII="
+								style="display: block;
+padding-top: 2px;"/></a>
+						<li>
+							<a href="http://www.roblox.com/Forum/User/MyForums.aspx">My Forums</a>
+						</li>
+						<li>
+							<a href="http://www.roblox.com/My/Profile.aspx">Profile</a>
+						</li>
+						<li>
+							<a href="http://www.roblox.com/Forum/Search/">Search</a>
+							<form action="/Forum/Search/" method="get">
+								<input type="search" name="searchText">
+								<input type="submit" style="display: none; ">
+							</form>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div data-name="thread">
+				<div class="main-content">
+					<div class="button-set">
+						<a href="?PostID=${posts[0].id}&View=Threaded&Threshold=5" class="button">View in Threaded View</a>
+						<a class="button" href="javascript:__doPostBack('ctl00$cphRoblox$PostView1$ctl00$TrackThread','')">{{if tracked}}<input id="ctl00_cphRoblox_PostView1_ctl00_TrackThread" type="checkbox" name="ctl00$cphRoblox$PostView1$ctl00$TrackThread" style="display: none"  />Untrack{{else}}<input id="ctl00_cphRoblox_PostView1_ctl00_TrackThread" type="checkbox" name="ctl00$cphRoblox$PostView1$ctl00$TrackThread" style="display: none" checked />Track{{/if}}
+						</a>
+						<a href="javascript:void(0)" class="button markdown-toggle right">Toggle Markdown</a>
+					</div>
+					<div class="posts old">
+						<header>
+							<span style="width:150px">Author</span>
+							<span>${posts[0].title}</span>
+						</header>
+						{{tmpl(posts) "postTemplate"}}
+					</div>
+				</div>
+			</div>
+			<div data-name="post">
+				<article class="forum-post{{if locked}} locked{{/if}}" id="${id}">
+					<section class="user-info {{if user.online}}online{{else}}offline{{/if}}">
+						<a href="../User.aspx?username=${user.name}" title="Visit ${user.name}'s profile ({{if user.online}}online{{else}}offline{{/if}})">
+							<span class="name">${user.name}</span>
+							<div class="images">
+								<img src="../Thumbs/Avatar.ashx?x=100&y=100&Format=Png&username=${user.name}" class="avatar"/>
+								<img src="../Thumbs/BCOverlay.ashx?username=${user.name}" class="bc"/>
+							</div>
+						</a>
+						<div class="details">
+							{{html user.details}}
+						</div>
+					</section>
+					<section class="post-info">
+						<header>
+							<span class="title">${title}</span>
+							<time datetime="${date}" title="${date}" pubdate>${dateString}</time>
+						</header>
+						<div class="content markdown">
+							{{html markedContent}}
+						</div>
+						<div class="content plaintext" style="display: none">${content}</div>
+						<footer class="actions">
+							{{if !locked}}<a class="reply button"
+								href="/Forum/AddPost.aspx?mode=flat&amp;PostID=${id}">
+								<span>+</span> Reply
+							</a>
+							<a class="quote button"
+								href="/Forum/AddPost.aspx?mode=flat&amp;PostID=${id}&amp;quote=true" style="display: none; ">
+								<span>&rdquo;</span> Quote
+							</a>{{/if}}
+							<a class="report"
+								href="../AbuseReport/ForumPost.aspx?PostID=${id}&amp;RedirectUrl=http%3A%2F%2Fwww.roblox.com%2FForum%2FShowPost.aspx%3FPostID%3D${id}%23${id}">
+								Report
+							</a>
+						</footer>
+					</section>
+				</article>
+			</div>
+			<div data-name="forum">
+				<div class="main-content">
+					<div class="button-set">
+						<a href="/Forum/AddPost.aspx?ForumID=${id}" class="button">New thread</a>
+						<a class="button" style="float: right" href="javascript:confirm('About to mark all posts as read') && __doPostBack('ctl00$cphRoblox$ThreadView1$ctl00$MarkAllRead','')">Mark all threads as read
+						</a>
+					</div>
+					<div class="threads">
+						{{html threads}}
+					</div>
+				</div>
+			</div>
+			<div data-name="postButtons">
+				<div class="button-set">
+					<input type="submit" name="ctl00$cphRoblox$Createeditpost1$PostForm$Cancel" value="Cancel" id="ctl00_cphRoblox_Createeditpost1_PostForm_Cancel" class="button">
+					<input type="submit" name="ctl00$cphRoblox$Createeditpost1$PostForm$PreviewButton" value="Preview &gt;" onclick="__doPostBack('ctl00$cphRoblox$Createeditpost1$PostForm$PreviewButton', '')" id="ctl00_cphRoblox_Createeditpost1_PostForm_PreviewButton" class="button">
+					<input type="submit" name="ctl00$cphRoblox$Createeditpost1$PostForm$PostButton" value="Post" id="ctl00_cphRoblox_Createeditpost1_PostForm_PostButton" class="button right">
+				</div>
+			</div>
+			<div data-name="newForm">
+				<section class="reply-form">
+					<div class="title">
+						<label for="title">Subject:</label>
+						<span><input name="ctl00$cphRoblox$Createeditpost1$PostForm$PostSubject" type="text" value="${title}" /></span>
+					</div>
+					<div id="wmd-panel">
+						<div id="wmd-button-bar"></div>
+						<textarea id="wmd-input" class="wmd-input" name="ctl00$cphRoblox$Createeditpost1$PostForm$PostBody">${message}</textarea>
+					</div>
+				</section>
+			</div>
+		</div>
+		<script type="text/javascript">
+		var settings = new Store("settings", {
+			disableImages: false,
+			disableLinks: false,
+			enlargeForum: true,
+			postLayout: 'old'
+		});
+		
+		chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+			if (request.action == 'getOptions') {
+				sendResponse(settings.toObject());
+			} else if(request.action == 'getTemplates') {
+				var templates = document.querySelectorAll('#templates > div');
+				var toSend = {};
+				
+				for (var i = 0; i < templates.length; i++) {
+					toSend[templates[i].getAttribute('data-name')] = templates[i].innerHTML;
+				}
+				
+				sendResponse(toSend);
+			} else {				
+				var templates = document.querySelectorAll('#templates > div');
+				var toSend = {};
+				
+				for (var i = 0; i < templates.length; i++) {
+					toSend[templates[i].getAttribute('data-name')] = templates[i].innerHTML;
+				}
+				
+				sendResponse({options: settings.toObject(), templates: toSend});
+			}
+		});
+		</script>
+	</head>
+</html>
