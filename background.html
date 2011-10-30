@@ -3,25 +3,8 @@
 		<script type="text/javascript" src="fancy-settings/source/lib/store.js"></script>
 		<div id="templates">
 			<div data-name="navigation">
-				<div id="ctl00_ctl00_cphRoblox_subMenu" class="forum-sub-menu" />
-					<ul>
-						<li class="breadcrumb">
-							<ul>
-								{{each breadcrumb}}
-								<li><a href="${$value.href}">${$value.name}</a></li>
-								{{/each}}
-							</ul>
-						</li>
-						<li>
-							<a target="_blank" href="${optionsPage}"><img title="Settings" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAARCAYAAADUryzEAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuODc7gF0AAAGwSURBVDhPjVNBSwJhEBXFEBY97s27pw4dCsI/EFgkBBXZbwi6FSFdUgiECLpF0EVoQZYEQZCwXPSgh9jWQyJFXboqihdFbJ59I9+uKyQMft+b997Ozsx6PAt+k8lkh+JHxP4i3gwnokIRZ6DRaKTYwLKsa8bBoQjYDCEeDod5IbhE0jTNOzZoNpsPwOieBjYejx9tJp1OZ1sqF2VbjvscNhgMtmZVKIqyXCqVKi4i7oHtH1xo5NfwhkKhvX6//8Um3W73Q9f1JwTOjIMDLom9UwNKbFAkqAcnTOr1ep+RSOSC0psInIFxXnAT0MJgrsxsNpsnYVAqMQjMjetqUK/Xb51zB+ZqkMlk9EKh8FytVmtMoA6/01mVZq8KbFqtYRg1aKAFZ50i7vf7D+Um0qxNIp8i6PwqN5G4B9AI7d9zRqPR1X/HCK5zE2OymMr9dpq5YLGZSTQaXWu3228QYUl8Pt855s8mxWLxBRgvW6vVMqGRqwiEw+HjZDKp0fvtYklIdMMG5XL5Hhhy4KiqekR3+wclgBXeME3Tztggl8ulxNOwfeAsOcfsdgcxLWJ1keAX3J9gP+YFh34AAAAASUVORK5CYII="
-								style="display: block;
-padding-top: 2px;"/></a>
-						<li>
-							<a href="http://www.roblox.com/Forum/User/MyForums.aspx">My Forums</a>
-						</li>
-						<li>
-							<a href="http://www.roblox.com/My/Profile.aspx">Profile</a>
-						</li>
+				<div id="ctl00_ctl00_cphRoblox_subMenu" class="forum-navigation" />
+					<ul class="links">
 						<li>
 							<a href="http://www.roblox.com/Forum/Search/">Search</a>
 							<form action="/Forum/Search/" method="get">
@@ -29,6 +12,21 @@ padding-top: 2px;"/></a>
 								<input type="submit" style="display: none; ">
 							</form>
 						</li>
+						<li>
+							<a href="http://www.roblox.com/My/Profile.aspx">Profile</a>
+						</li>
+						<li>
+							<a href="http://www.roblox.com/Forum/User/MyForums.aspx">My Forums</a>
+						</li>
+						<li>
+							<a target="_blank" href="${optionsPage}"><img title="Settings" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAARCAYAAADUryzEAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOwwAADsMBx2+oZAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuODc7gF0AAAGwSURBVDhPjVNBSwJhEBXFEBY97s27pw4dCsI/EFgkBBXZbwi6FSFdUgiECLpF0EVoQZYEQZCwXPSgh9jWQyJFXboqihdFbJ59I9+uKyQMft+b997Ozsx6PAt+k8lkh+JHxP4i3gwnokIRZ6DRaKTYwLKsa8bBoQjYDCEeDod5IbhE0jTNOzZoNpsPwOieBjYejx9tJp1OZ1sqF2VbjvscNhgMtmZVKIqyXCqVKi4i7oHtH1xo5NfwhkKhvX6//8Um3W73Q9f1JwTOjIMDLom9UwNKbFAkqAcnTOr1ep+RSOSC0psInIFxXnAT0MJgrsxsNpsnYVAqMQjMjetqUK/Xb51zB+ZqkMlk9EKh8FytVmtMoA6/01mVZq8KbFqtYRg1aKAFZ50i7vf7D+Um0qxNIp8i6PwqN5G4B9AI7d9zRqPR1X/HCK5zE2OymMr9dpq5YLGZSTQaXWu3228QYUl8Pt855s8mxWLxBRgvW6vVMqGRqwiEw+HjZDKp0fvtYklIdMMG5XL5Hhhy4KiqekR3+wclgBXeME3Tztggl8ulxNOwfeAsOcfsdgcxLWJ1keAX3J9gP+YFh34AAAAASUVORK5CYII="
+								style="display: block; padding-top: 2px;"/></a>
+						</li>
+					</ul>
+					<ul class="breadcrumb">
+						{{each breadcrumb}}
+						<li><a href="${$value.href}">${$value.name}</a></li>
+						{{/each}}
 					</ul>
 				</div>
 			</div>

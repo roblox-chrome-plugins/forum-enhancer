@@ -152,8 +152,9 @@ $(function() {
 				}
 			}
 			oldPagination.remove();
-			footer = $('<div class="forum-footer"/>');
+			footer = $('<div class="forum-footer forum-navigation"/>');
 			$('#ctl00_cphRoblox_CenterColumn').append(footer.append(newPagination));
+			footer.append($('.breadcrumb').clone());
 		}
 	})();
 	

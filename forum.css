@@ -6,64 +6,66 @@
 	border: none !important;
 }
 
-.forum-sub-menu {
+.forum-navigation {
 	width: 900px;
-	height: 30px;
+	/*height: 30px;*/
+	overflow:hidden;
 	border: none;
 	text-align: center;
-}
-
-.forum-sub-menu ul {
-	padding: 0;
-	margin: 0;
-	list-style-type: none;
-	/*background: url(chrome-extension://kcpdfglmclgjedmjhiakmmgkcibkimod/menu.png)  repeat-x;*/
-	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA8CAIAAAAok0etAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAANRJREFUGFcFwWEGgwAAgNHvAp1gF6ht2ZTNLM2ytFqRiSQiIsbYj4gYIyJmxqRu0Gk61N5jHEc8z8N1XS6XC47jYNs25/MZy7IwTZPT6YRhGByPRw6HA7quo2ka+/2e3W7Hdrtls9mgqiqKorBer1mtVsiyzHK5ZLFYMJ/PkSQJURQRBIFpmhiGgb7v6bqO3+/H9/vl8/nwfr9p25amaajrmtfrxfP5pKoqyrKkKAoejwf3+53b7Uae52RZRpqmJElCHMdEUUQYhgRBwPV6xfd9ZrPZH8ICPecEZi8lAAAAAElFTkSuQmCC) repeat-x;
+	background: url(chrome-extension://__MSG_@@extension_id__/menu-default.png);
 	overflow: hidden;
 }
 
-.forum-sub-menu ul li {
+.forum-navigation ul {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+.forum-navigation ul.links {
 	float: right;
+}
+.forum-navigation ul.links li {
+	float: left;
 	position: relative;
 }
 
-.forum-sub-menu ul li.breadcrumb {
+.forum-navigation ul.breadcrumb {
 	float: left;
 }
-.forum-sub-menu ul li.breadcrumb li {
+.forum-navigation ul.breadcrumb li {
 	float: left;
 	margin-right: 5px;
+	position: relative;
 }
-.forum-sub-menu ul li.breadcrumb li a {
+.forum-navigation ul.breadcrumb li a {
 	font-size: 10px;
 	position: relative;
 	z-index: 2;
 }
-.forum-sub-menu ul li:hover {
-    /* background: url(chrome-extension://kcpdfglmclgjedmjhiakmmgkcibkimod/menu.png) repeat-x 0 -30px; */
-	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA8CAIAAAAok0etAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAANRJREFUGFcFwWEGgwAAgNHvAp1gF6ht2ZTNLM2ytFqRiSQiIsbYj4gYIyJmxqRu0Gk61N5jHEc8z8N1XS6XC47jYNs25/MZy7IwTZPT6YRhGByPRw6HA7quo2ka+/2e3W7Hdrtls9mgqiqKorBer1mtVsiyzHK5ZLFYMJ/PkSQJURQRBIFpmhiGgb7v6bqO3+/H9/vl8/nwfr9p25amaajrmtfrxfP5pKoqyrKkKAoejwf3+53b7Uae52RZRpqmJElCHMdEUUQYhgRBwPV6xfd9ZrPZH8ICPecEZi8lAAAAAElFTkSuQmCC) repeat-x 0 -30px;
+.forum-navigation ul li:hover {
+    background: url(chrome-extension://__MSG_@@extension_id__/menu-hover.png) repeat-x;
 }
-.forum-sub-menu .breadcrumb li:hover::before,
-.forum-sub-menu .breadcrumb li:hover::after,
-.forum-sub-menu .breadcrumb li::after{
+.forum-navigation .breadcrumb li:hover::before,
+.forum-navigation .breadcrumb li:hover::after,
+.forum-navigation .breadcrumb li::after{
 	content: "";
 	position: absolute;
 	height: 30px;
 	width: 15px;
 	right: -5px;
 	top: 0;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAABaCAIAAADo95tZAAAABGdBTUEAALGPC/xhBQAAAlpJREFUWEfN1l1qmkEUxvEnC+gK3IBpGxJaWkpLQ0JCmraCiCAiCIIgCIIXgiAIgiAIIoKI7qCrcQWupo+ZZjLOmY+Tu/4vXuY9M9c/ztl+vz8cDlBWKpV2ux2/mvD7qe12aw7p8Ou5zWZjz7EDfjqt12v3V57xeNpqtfIm7i9+iJbLpRyaCR5CLRaL4Bz3kebzubzBXbzZbOZd4jbZdDp173GTazKZ2Ce4VjQej80rfNc1Go34EN/UDYdDfFU3GAzwRVe/3+dDfFbU6/XMK3zK1e127RN8TNbpdNx7fIjXbre9S1xFarVa8gaXoZrNZnCOC1Gj0ZBDM8H70+r1ujdxf/HOqVarub/yjLfPVatVe44dcP5UpVIxh3QoFovlcplfTSgUCm/U4c9rgh5YIgzqqgSW/IK0mrLA8gHoqi0NLG9BVN0SwPIKFNUrBuzRWHIqCwLLIWhpsCC9IKSxpL6gook8gEFC07kGg35mswyDeGoyEoNyKiPGoJzKiDGIpyYjMehnNsswSGg612BQ0UQewCCksaS+oKXBgvSCnMqCwHIIiuoVA/ZoLFF1SwDLK9BVWxpY3oK0mrLA8gGoqxJY8gs9sEQYal+PD8E9Vh/MHqvsZY812KY72WOtt7GDv8e65MpzYI/11HV/w3ushNdMonts0N7UHivtzeyxHr/5PdYVWLXHWoS1e6xx+BV7LCn+T/ZYUqzdY43Dqj3WIpzfY12BM3usx29qj5X2RvfYoL3hPVbCayaBPdZT1/3191iXXHk+2WOtt7HDyx5rsE33b4+ltJqOe6y+v1Gc2WBGK/CEAAAAAElFTkSuQmCC);
+    background-image: url(chrome-extension://__MSG_@@extension_id__/breadcrumb.png);
 	background-repeat: repeat-x;
 	background-position: 0 0px;
 }
-.forum-sub-menu .breadcrumb li:hover::before {
+.forum-navigation .breadcrumb li:hover::before {
 	background-position: 0 -60px;
 	left: -15px;
 }
-.forum-sub-menu .breadcrumb li:hover::after {
+.forum-navigation .breadcrumb li:hover::after {
 	background-position: 0 -30px;
 }
-.forum-sub-menu ul li a {
+.forum-navigation ul li a {
 	display: inline-block;
 	vertical-align: middle;
 	padding: 5px;
@@ -72,7 +74,7 @@
 	color: white !important;
 	text-decoration: none;
 }
-.forum-sub-menu ul li input {
+.forum-navigation ul li input {
 	display: inline-block;
 	vertical-align: middle;
 	border: 0;
@@ -80,13 +82,13 @@
 	margin-right: 5px;
 	height: 20px;
 }
-.forum-sub-menu form {
+.forum-navigation form {
 	display: inline; margin: 0; padding: 0;
 }
 .forum-footer {
 	color: white;
 	overflow: hidden;
-	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA8CAIAAAAok0etAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAANRJREFUGFcFwWEGgwAAgNHvAp1gF6ht2ZTNLM2ytFqRiSQiIsbYj4gYIyJmxqRu0Gk61N5jHEc8z8N1XS6XC47jYNs25/MZy7IwTZPT6YRhGByPRw6HA7quo2ka+/2e3W7Hdrtls9mgqiqKorBer1mtVsiyzHK5ZLFYMJ/PkSQJURQRBIFpmhiGgb7v6bqO3+/H9/vl8/nwfr9p25amaajrmtfrxfP5pKoqyrKkKAoejwf3+53b7Uae52RZRpqmJElCHMdEUUQYhgRBwPV6xfd9ZrPZH8ICPecEZi8lAAAAAElFTkSuQmCC") repeat-x;
+	background: url(chrome-extension://__MSG_@@extension_id__/menu-default.png) repeat-x;
 	
 }
 .forum-pagination {
