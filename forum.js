@@ -26,7 +26,7 @@ function parseRobloxDate(date) {
 	});
 	
     /**TODO: Handle time zone being different when logged out. WTF, roblox. */
-	date += ' PST';
+	date += ' -800';
 	
 	//Today?
 	if(/today @/i.test(date))
@@ -54,7 +54,7 @@ $(function() {
 	$(window).load(function() { setTimeout(function() { body.attr('id', 'Body'); }, 1) });
 	
 	(function makeNavigation() {
-		$.template("navigationTemplate", templates.navigation);
+		$.template("navigationTemplate", templates.navigation.default);
 		
 		//Remove navigation
 		$('span#ctl00_cphRoblox_NavigationMenu2').add('span#ctl00_cphRoblox_Navigationmenu1').remove();
@@ -163,11 +163,22 @@ $(function() {
 	}
 
 	if(location.pathname == '/Forum/ShowPost.aspx') {
-		/** Post list */
-		$.template("postTemplate", templates.post);
-		$.template("threadTemplate", templates.thread);
-		var page = $.tmpl("threadTemplate", getThread()).replaceAll('#ctl00_cphRoblox_PostView1');
-		
+		if($.QueryString['View'] == 'Threaded') {
+			/** Threaded view */
+			var thread = posts.fromThreadedView();
+			
+			$.template("postTemplate", templates.post.small);
+			$.template("threadTemplate", templates.thread.small);
+			var page = $.tmpl("threadTemplate", thread).replaceAll('#ctl00_cphRoblox_PostView1');
+		}
+		else {
+			/** Post list */
+			var thread = posts.fromListView();
+
+			$.template("postTemplate", templates.post.default);
+			$.template("threadTemplate", templates.thread.default);
+			var page = $.tmpl("threadTemplate", thread).replaceAll('#ctl00_cphRoblox_PostView1');
+		}
 		hljs.tabReplace = '    '; // 4 spaces
 		hljs.initHighlighting();
 		$('body').delegate('.markdown-toggle', 'click', function() {
@@ -195,7 +206,7 @@ $(function() {
 			)
 		}
 		else {
-			$.template('newFormTemplate', templates.newForm);
+			$.template('newFormTemplate', templates.newForm.default);
 			$.tmpl("newFormTemplate", {
 				message: $('#ctl00_cphRoblox_Createeditpost1_PostForm_PostBody').val(),
 				title: $('#ctl00_cphRoblox_Createeditpost1_PostForm_PostSubject').val()
@@ -262,7 +273,7 @@ $(function() {
 				//New Thread
 			}
 			var table = $('#ctl00_cphRoblox_Createeditpost1_PostForm_Post').next();
-			var buttons = $.tmpl($.template(null, templates.postButtons), {});
+			var buttons = $.tmpl($.template(null, templates.postButtons.default), {});
 			table.detach()
 				.find('table').css('margin', 'auto')
 					.find('tr').filter(function() {return !$.trim($(this).text()); }).remove();
@@ -270,7 +281,7 @@ $(function() {
 		}
 	}
 	else if(location.pathname == '/Forum/ShowForum.aspx') {
-		$.template("forumTemplate", templates.forum);
+		$.template("forumTemplate", templates.forum.default);
 		var page = $.tmpl("forumTemplate", {
 			id: $.QueryString['ForumID'],
 			threads: $('#ctl00_cphRoblox_ThreadView1_ctl00_ThreadList').parent().html()

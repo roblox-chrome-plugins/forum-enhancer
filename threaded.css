@@ -1,0 +1,110 @@
+.posts.threaded {
+    margin: 0px;
+    overflow: hidden;
+    background: #c0c0c0;
+}
+.posts.threaded article {
+    margin: 0;
+    overflow: hidden;
+    clear: both;
+}
+.posts.threaded article article {margin-left:27.5px; margin-top: -5px;}
+.posts.threaded article:last-child article:first-child {margin-left:27.5px;}
+.posts.threaded article:last-child article + article {margin-left:27.5px !important; }
+.posts.threaded article:last-child article:last-child {margin-left:0px; }
+
+.posts.threaded article .user-info {
+    float: left;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0px 0px 5px #404040;
+    margin: 5px;
+    margin-right: 0;
+}
+.posts.threaded article .user-info.online { background: #c0ffc0; }
+.posts.threaded article .user-info.offline { background: #ffc0c0; }
+.posts.threaded article .user-info .avatar {
+    width: 50px;
+    height:50px;
+    display: block;
+}
+.posts.threaded article .post-info {
+    overflow: hidden;
+    position: relative;
+    padding: 5px;
+}
+
+.posts.threaded article .post-info::before{
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 0px;
+    border-right: 5px solid white;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+.posts.threaded article .post-info::after{
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 0px;
+    border-right: 5px solid #e0e0e0;
+    border-top: 5px solid transparent;
+}
+
+
+.posts.threaded article .post-info .container {
+    overflow: hidden;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0px 0px 5px #404040;
+    min-height: 50px;
+}
+.posts.threaded article .post-info header {
+    padding: 5px;
+    line-height:15px;
+    overflow: hidden;
+    background: #e0e0e0;
+}
+.posts.threaded article .post-info header .title {
+    font-weight: bold;
+}
+.posts.threaded article .post-info header time {
+    float: right;
+}
+.posts.threaded article .post-info .content {
+    padding: 0px 5px;
+}
+
+.posts.threaded article .post-info footer {
+    height: 20px;
+    float:right;
+    margin-left: 5px;
+}
+.posts.threaded article .post-info footer .button {
+    border-radius: 5px;
+    display:block;
+    background: #c0c0c0;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 15px;
+    text-decoration: none;
+    margin-bottom: 5px;
+    color:white;
+    font-weight: bold;
+    font-family: arial Black;
+}
+
+.posts.threaded article .post-info footer .button:hover {background: white; color:#c0c0c0;}
+
+.posts.threaded article .post-info footer .reply span { margin-top: -4px; }
+.posts.threaded article .post-info footer .quote span { margin-bottom: -4px; }
+
+.posts.threaded article .post-info footer .quote span .reply,
+.posts.threaded article .post-info footer .quote span .quote {
+}
+
+/******/
+

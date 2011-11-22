@@ -33,7 +33,7 @@
 			<div data-name="thread">
 				<div class="main-content">
 					<div class="button-set">
-						<a href="?PostID=${posts[0].id}&View=Threaded&Threshold=5" class="button">View in Threaded View</a>
+						<a href="?PostID=${posts[0].id}&View=Threaded&ThreshHold=100" class="button">View in Threaded View</a>
 						<a class="button" href="javascript:__doPostBack('ctl00$cphRoblox$PostView1$ctl00$TrackThread','')">{{if tracked}}<input id="ctl00_cphRoblox_PostView1_ctl00_TrackThread" type="checkbox" name="ctl00$cphRoblox$PostView1$ctl00$TrackThread" style="display: none"  />Untrack{{else}}<input id="ctl00_cphRoblox_PostView1_ctl00_TrackThread" type="checkbox" name="ctl00$cphRoblox$PostView1$ctl00$TrackThread" style="display: none" checked />Track{{/if}}
 						</a>
 						<a href="javascript:void(0)" class="button markdown-toggle right">Toggle Markdown</a>
@@ -120,6 +120,39 @@
 					<label for="ctl00_cphRoblox_Createeditpost1_PostForm_AllowReplies">Do not allow replies to this post.</label>
 				</section>
 			</div>
+			<div data-name="thread" data-theme="small">
+				<div class="main-content">
+					<div class="button-set">
+						<a href="?PostID=${posts[0].id}" class="button">View in Standard View</a>
+						<a class="button" href="javascript:__doPostBack('ctl00$cphRoblox$PostView1$ctl01$TrackThread','')">{{if tracked}}<input id="ctl00_cphRoblox_PostView1_ctl01_TrackThread" type="checkbox" name="ctl00$cphRoblox$PostView1$ctl01$TrackThread" style="display: none"  />Untrack{{else}}<input id="ctl00_cphRoblox_PostView1_ctl01_TrackThread" type="checkbox" name="ctl00$cphRoblox$PostView1$ctl01$TrackThread" style="display: none" checked />Track{{/if}}
+						</a>
+						<a href="javascript:void(0)" class="button markdown-toggle right">Toggle Markdown</a>
+					</div>
+					<div class="posts threaded">
+						{{tmpl(posts) "postTemplate"}}
+					</div>
+				</div>
+			</div>
+			<div data-name="post" data-theme="small">
+				<article class="forum-post{{if locked}} locked{{/if}}" id="${id}">
+					<section class="user-info">
+						<img src="http://www.roblox.com/Thumbs/Avatar.ashx?x=100&y=100&Format=Png&username=${author}" class="avatar" title="${author}"/>
+					</section>
+					<section class="post-info">
+						<div class="container">
+							<header>
+								<span class="title">${title}</span>
+								<time datetime="${date}" title="${date}" pubdate>${dateString}</time>                            
+							</header>
+							<div class="content markdown">{{html markedContent}}</div>
+							<div class="content plaintext" style="display: none">${content}</div>
+						</div>
+					</section>
+					{{if replies}}
+					{{tmpl(replies) "postTemplate"}}
+					{{/if}}
+				</article>
+			</div>
 		</div>
 		<script type="text/javascript">
 		var settings = new Store("settings", {
@@ -137,16 +170,26 @@
 				var toSend = {};
 				
 				for (var i = 0; i < templates.length; i++) {
-					toSend[templates[i].getAttribute('data-name')] = templates[i].innerHTML;
+					var name = templates[i].getAttribute('data-name');
+					var theme = templates[i].getAttribute('data-theme') || 'default';
+					if(toSend[name] == null)
+						toSend[name] = {};
+
+					toSend[name][theme] = templates[i].innerHTML;
 				}
 				
 				sendResponse(toSend);
-			} else {				
+			} else {
 				var templates = document.querySelectorAll('#templates > div');
 				var toSend = {};
 				
 				for (var i = 0; i < templates.length; i++) {
-					toSend[templates[i].getAttribute('data-name')] = templates[i].innerHTML;
+					var name = templates[i].getAttribute('data-name');
+					var theme = templates[i].getAttribute('data-theme') || 'default';
+					if(toSend[name] == null)
+						toSend[name] = {};
+
+					toSend[name][theme] = templates[i].innerHTML;
 				}
 				
 				sendResponse({options: settings.toObject(), templates: toSend});
