@@ -1,6 +1,11 @@
 1.6
 ===
 
+1.6.5
+-----
+ * Fixed links when using www1.roblox.com or another similar subdomain
+ * Bodged DST again - should probably get forum time from the main forum page.
+
 1.6.4
 -----
  * Improved Threaded view

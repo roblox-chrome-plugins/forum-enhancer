@@ -1,6 +1,6 @@
 {
 	"name": "Roblox Forum Enhancer",
-	"version": "1.6.4",
+	"version": "1.6.5",
 	"description": "Removes ads, changes the page title, tidies the navigation, corrects timezones, and adds markdown to forum posts",
 	"icons": {
 		"48": "icon.ico",
@@ -8,7 +8,7 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["http://www.roblox.com/Forum/*"],
+			"matches": ["http://*.roblox.com/Forum/*"],
 			"js": [
 				"date.js",
 				"Markdown.Converter.js",

@@ -5,8 +5,11 @@ function prettyDate(date){
 	var diff = (((new Date()).getTime() - date.getTime()) / 1000),
 		day_diff = Math.floor(diff / 86400);
 			
-	if ( isNaN(day_diff) || day_diff < 0)
+	if ( isNaN(day_diff) )
 		return;
+
+	else if(day_diff < 0)
+		return "ERROR!";
 			
 	return day_diff == 0 && (
 			diff < 60 && "just now" ||
