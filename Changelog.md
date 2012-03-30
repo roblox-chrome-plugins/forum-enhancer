@@ -1,6 +1,11 @@
 1.6
 ===
 
+1.6.6
+-----
+ * Updated to match new layout - sticky header
+ * Bottom breadcrumb removed
+
 1.6.5
 -----
  * Fixed links when using www1.roblox.com or another similar subdomain

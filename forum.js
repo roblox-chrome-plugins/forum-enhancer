@@ -47,6 +47,7 @@ $(function() {
 	
 	var footer;
 
+	$('#AdvertisingLeaderboard').remove();
 	$('#ctl00_Announcement').insertBefore('#Container');
 	
 	var body = $('#Body');
@@ -99,7 +100,7 @@ $(function() {
 		$.tmpl('navigationTemplate', {
 			breadcrumb: data,
 			optionsPage: chrome.extension.getURL('fancy-settings/source/index.html')
-		}).insertBefore(body);
+		}).insertAfter('#Nav');
 		document.title = data.map(function(item) { return item.name; }).reverse().join(' | ');
 	})();
 	console.log("Nav");
@@ -127,7 +128,7 @@ $(function() {
 			var currentPage = $.QueryString['PageIndex'] || pageData[1].replace(/,/g, '');
 			var lastPage = pageData[2].replace(/,/g, '');
 			
-			var newPagination = $('<div />').addClass('forum-pagination');
+			var newPagination = $('<div />').addClass('forum-pagination bottom');
 			var justAdded = null;
 			for(var i = 1; i <= lastPage; i++) {
 				if(currentPage == i) {
@@ -152,9 +153,8 @@ $(function() {
 				}
 			}
 			oldPagination.remove();
-			footer = $('<div class="forum-footer forum-navigation"/>');
+			footer = $('<div class="forum-footer forum-navigation bottom"/>');
 			$('#ctl00_cphRoblox_CenterColumn').append(footer.append(newPagination));
-			footer.append($('.breadcrumb').clone());
 		}
 	})();
 	
