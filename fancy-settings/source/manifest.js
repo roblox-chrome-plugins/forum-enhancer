@@ -67,6 +67,13 @@ this.manifest = {
 		},
 		{
 			"tab": "Forum Appearance",
+			"group": "More options",
+			"name": "infiniteScroll",
+			"type": "checkbox",
+			"label": "Load more posts at the bottom of the page"
+		},
+		{
+			"tab": "Forum Appearance",
 			"group": "Forum Style",
 			"name": "post-layout",
 			"type": "radioButtons",

@@ -41,43 +41,53 @@ function markdownText(plainText) {
 	return converter.makeHtml(plainText);
 }
 
-posts = {
+Posts = {
+	fromListView: function(table) {
+		return (
+		table.children('tbody').children()
+			.slice(2, -1) //Exclude headers and footer
+			.map(function() {
+				var data = {};
+				
+				
+				var userContainer = $(this).children('td').eq(0);
+				var rows = userContainer.find('td');
+				data.user = {
+					name:    rows.eq(0).find('.normalTextSmallBold').text(),
+					online:  /online/i.test(rows.eq(0).find('img').attr('src')),
+					details: rows.filter(function(i) {return i > 1 && !$(this).html().match('&nbsp;') }).map(function() { return $(this).html(); }).get()
+				};
+				
+				
+				var info = $(this).children('td').eq(1).find('td');
+				var heading = info.eq(0);
+				
+				
+				data.id            = +heading.find('a').attr('name');
+				data.locked        = info.eq(4).find('a[href^="/Forum/AddPost.aspx"]').size() == 0;
+				data.title         = heading.children('span').eq(0).text();
+				//data.date          = $.trim(heading.find('a span').eq(1).text());
+				data.date          = $.trim(heading.find('span').last().text());
+				data.ownerPage     = location.href;
+
+				data.content       = getRawText(info.eq(1).children('span'));
+				data.markedContent = markdownText(data.content);
+				
+				var tryParse = parseRobloxDate(data.date);
+				data.date = tryParse || data.date;
+				data.dateString = tryParse ? prettyDate(tryParse) : tryParse; //data.date.toString('dd MMM yyyy @ hh:mm tt'); //
+				
+				return data;
+			})
+			.get()
+		)
+	}
+}
+
+Thread = {
 	fromListView: function() {
-		var table = $('#ctl00_cphRoblox_PostView1_ctl00_PostList');
-		var postData = table.children('tbody').children().slice(2, -1).map(function() {
-			var data = {};
-			
-			
-			var userContainer = $(this).children('td').eq(0);
-			var rows = userContainer.find('td');
-			data.user = {
-				name: rows.eq(0).find('.normalTextSmallBold').text(),
-				online: /online/i.test(rows.eq(0).find('img').attr('src')),
-				details: rows.filter(function(i) {return i > 1 && !$(this).html().match('&nbsp;') }).map(function() { return $(this).html(); }).get()
-			};
-			
-			
-			var info = $(this).children('td').eq(1).find('td');
-			var heading = info.eq(0);
-			
-			
-			data.id = +heading.find('a').attr('name');
-			data.locked = info.eq(4).find('a[href^="/Forum/AddPost.aspx"]').size() == 0;
-			data.title = heading.children('span').eq(0).text();
-			data.date = $.trim(heading.find('a span').eq(1).text());
-			data.ownerPage = location.href;
-
-			data.content = getRawText(info.eq(1).children('span'));
-			data.markedContent = markdownText(data.content);
-			
-			data.date = parseRobloxDate(data.date);
-			data.dateString = prettyDate(data.date); //data.date.toString('dd MMM yyyy @ hh:mm tt'); //
-			
-			return data;
-		}).get();
-
 		return {
-			posts: postData,
+			posts: Posts.fromListView($('#ctl00_cphRoblox_PostView1_ctl00_PostList')),
 			tracked: $('#ctl00_cphRoblox_PostView1_ctl00_TrackThread').prop('checked')
 		};
 	},
@@ -103,8 +113,9 @@ posts = {
 				data.content = getRawText($(this).find('td.forumRow'));
 				data.markedContent = markdownText(data.content);
 
-				data.date = parseRobloxDate(data.date);
-				data.dateString = prettyDate(data.date); //data.date.toString('dd MMM yyyy @ hh:mm tt'); //
+				var tryParse = parseRobloxDate(data.date);
+				data.date = tryParse || data.date;
+				data.dateString = tryParse ? prettyDate(tryParse) : tryParse; //data.date.toString('dd MMM yyyy @ hh:mm tt'); //
 				
 				return data;
 			}
@@ -132,6 +143,28 @@ posts = {
 		};
 	}
 }
+
+Pagination = function(at, to, baseUrl) {
+
+
+	var pagination = $('<div />').addClass('forum-pagination');
+
+	var pages = [1];
+	for(var p = Math.max(at - 3, 2); p <= Math.min(at + 3, to - 1); p++)
+		pages.push(p);
+	if(to != 1) pages.push(to);
+	
+	var last = 0;
+	$.each(pages, function(_, i) {
+		if(i - 1 != last) $('<span />', { text: '...', class: 'page-gap'                     }).appendTo(pagination);
+		if(at == i)       $('<span />', { text: i,     class: 'page-link current'            }).appendTo(pagination);
+		else              $('<a />',    { text: i,     class: 'page-link', href: baseUrl + i }).appendTo(pagination);
+		
+		last = i;
+	});
+	return pagination;
+}
+
 /*
 chrome.extension.sendRequest({action: 'getTemplates'}, function(t) {
 	console.log(t);

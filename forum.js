@@ -107,8 +107,8 @@ $(function() {
 		document.title = data.map(function(item) { return item.name; }).reverse().join(' | ');
 	})();
 
-	(function makePagination() {
-		var oldPagination, pageData, pageBaseUrl;
+	var paging = (function makePagination() {
+		var data = {};
 		$.each([
 			{
 				selector: '#ctl00_cphRoblox_ThreadView1_ctl00_Pager',
@@ -120,41 +120,26 @@ $(function() {
 		], function() {
 			var elem = $(this.selector);
 			if(elem.length) {
-				oldPagination = elem;
-				pageBaseUrl = '?'+ this.param + '=' + $.QueryString[this.param] + '&PageIndex=';
-				pageData = /Page ([\d,]+) of ([\d,]+)/.exec(oldPagination.text());
+				data.baseUrl = '?'+ this.param + '=' + $.QueryString[this.param] + '&PageIndex=';
+				var info = /Page ([\d,]+) of ([\d,]+)/.exec(elem.text());
+				data.at = +($.QueryString['PageIndex'] || info[1].replace(/,/g, ''));
+				data.count = +info[2].replace(/,/g, '');
+				elem.remove();
 				return false;
 			}				
 		});	
-		if(pageData) {
-			var currentPage = +($.QueryString['PageIndex'] || pageData[1].replace(/,/g, ''));
-			var lastPage = +pageData[2].replace(/,/g, '');
-			
-			var newPagination = $('<div />').addClass('forum-pagination');
+		if(data.count) {
+			pagination = Pagination(data.at, data.count, data.baseUrl);
 
-			var pages = [1];
-			for(var p = Math.max(currentPage-3, 2); p <= Math.min(currentPage+3, lastPage-1); p++)
-				pages.push(p);
-			if(lastPage != 1) pages.push(lastPage);
-			
-			var last = 0;
-			$.each(pages, function(_, i) {
-				if(i - 1 != last)    $('<span />', { text: '...', class: 'page-gap'                         }).appendTo(newPagination);
-				if(currentPage == i) $('<span />', { text: i,     class: 'page-link current'                }).appendTo(newPagination);
-				else                 $('<a />',    { text: i,     class: 'page-link', href: pageBaseUrl + i }).appendTo(newPagination);
-				
-				last = i;
-			});
-
-			oldPagination.remove();
 			$('#ctl00_cphRoblox_CenterColumn').append(
 				$('<div class="forum-footer"/>').append(
 					$('<div class="content"/>').append(
-						newPagination
+						pagination
 					)
 				)
 			);
 		}
+		return data
 	})();
 	
 	function getRawText(robloxElem) {
@@ -164,7 +149,7 @@ $(function() {
 	if(location.pathname == '/Forum/ShowPost.aspx') {
 		if($.QueryString['View'] == 'Threaded') {
 			/** Threaded view */
-			var thread = posts.fromThreadedView();
+			var thread = Thread.fromThreadedView();
 			
 			$.template("postTemplate", templates.post.small);
 			$.template("threadTemplate", templates.thread.small);
@@ -172,20 +157,50 @@ $(function() {
 		}
 		else {
 			/** Post list */
-			var thread = posts.fromListView();
+			var thread = Thread.fromListView();
+
+			if(paging.count)
+				thread.more = true
 
 			$.template("postTemplate", templates.post.default);
 			$.template("threadTemplate", templates.thread.default);
-			var page = $.tmpl("threadTemplate", thread).replaceAll('#ctl00_cphRoblox_PostView1');
+			var page = $.tmpl("threadTemplate", thread)
+			page.replaceAll('#ctl00_cphRoblox_PostView1');
+
 		}
 		hljs.tabReplace = '    '; // 4 spaces
 		hljs.initHighlighting();
+		var target = paging.at + 1;
 		$('body').delegate('.markdown-toggle', 'click', function() {
 			$('.forum-post .post-info').each(function() {
 				$(this).find('.content.markdown').toggle();
 				$(this).find('.content.plaintext').toggle();
 			});
+		}).delegate('.show-more-posts', 'click', function() {
+			var button = this;
+			$.get(paging.baseUrl + target++, function(data) {
+				var posts = $('#ctl00_cphRoblox_PostView1_ctl00_PostList', data);
+				posts = Posts.fromListView(posts);
+				$.tmpl("postTemplate", posts).insertBefore(button);
+			});
 		});
+		if(options.infiniteScroll) {
+			$('.forum-footer').remove();
+			$(window).scroll(function() {
+				if ($(window).scrollTop() == $(document).height() - $(window).height() && target <= paging.count) {
+					$.get(paging.baseUrl + target++, function(data) {
+						var posts = $('#ctl00_cphRoblox_PostView1_ctl00_PostList', data);
+						posts = Posts.fromListView(posts);
+						$.tmpl("postTemplate", posts).appendTo('.posts');
+						if(target > paging.count) $('.loading-more-posts').remove();
+					});
+				}
+			});
+		}
+		else {
+			$('.loading-more-posts').remove();
+		}
+
 	}
 	else if(location.pathname == '/Forum/AddPost.aspx') {
 		var page = $('#ctl00_cphRoblox_Createeditpost1').children('table').eq(1);

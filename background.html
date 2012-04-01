@@ -45,6 +45,7 @@
 						</header>
 						{{tmpl(posts) "postTemplate"}}
 					</div>
+					{{if more}}<span class="loading-more-posts">Loading...</a>{{/if}}
 				</div>
 			</div>
 			<div data-name="post">
@@ -160,6 +161,7 @@
 			disableLinks: false,
 			enlargeForum: true,
 			removeFooter: true,
+			infiniteScroll: false,
 			postLayout: 'old'
 		});
 		

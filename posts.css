@@ -200,6 +200,15 @@
 }
 .button-set  .button.right { float: right; }
 
+.loading-more-posts {
+	background: #f0f0f0;
+	text-align: center;
+	font-size: 30px;
+	line-height: 60px;
+	color: #c0c0c0;
+	display: block;
+}
+
 /*New post Stuff*/
 
 .reply-form .title {
