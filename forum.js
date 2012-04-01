@@ -101,6 +101,7 @@ $(function() {
 			breadcrumb: data,
 			optionsPage: chrome.extension.getURL('fancy-settings/source/index.html')
 		}).insertAfter('#Nav');
+		$('.forceSpace').removeAttr('style');
 		document.title = data.map(function(item) { return item.name; }).reverse().join(' | ');
 	})();
 	console.log("Nav");

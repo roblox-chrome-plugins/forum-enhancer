@@ -1,6 +1,10 @@
 1.6
 ===
 
+1.6.7
+-----
+ * Fixed bug induced by Roblox changing the template again
+
 1.6.6
 -----
  * Updated to match new layout - sticky header
