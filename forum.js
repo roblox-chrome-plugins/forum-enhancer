@@ -42,6 +42,7 @@ var options = data.options;
 var templates = data.templates;
 
 $(function() {
+	$('html').addClass('RFE');
 	var submenu;
 	var breadcrumb;
 	
@@ -55,6 +56,7 @@ $(function() {
 	$(window).load(function() { setTimeout(function() { body.attr('id', 'Body'); }, 1) });
 	
 	(function makeNavigation() {
+		$('#SmallHeaderContainer').prependTo('#Header');
 		$.template("navigationTemplate", templates.navigation.default);
 		
 		//Remove navigation
@@ -100,11 +102,10 @@ $(function() {
 		$.tmpl('navigationTemplate', {
 			breadcrumb: data,
 			optionsPage: chrome.extension.getURL('fancy-settings/source/index.html')
-		}).insertAfter('#Nav');
+		}).appendTo('#Nav');
 		$('.forceSpace').removeAttr('style');
 		document.title = data.map(function(item) { return item.name; }).reverse().join(' | ');
 	})();
-	console.log("Nav");
 
 	(function makePagination() {
 		var oldPagination, pageData, pageBaseUrl;
@@ -126,36 +127,33 @@ $(function() {
 			}				
 		});	
 		if(pageData) {
-			var currentPage = $.QueryString['PageIndex'] || pageData[1].replace(/,/g, '');
-			var lastPage = pageData[2].replace(/,/g, '');
+			var currentPage = +($.QueryString['PageIndex'] || pageData[1].replace(/,/g, ''));
+			var lastPage = +pageData[2].replace(/,/g, '');
 			
-			var newPagination = $('<div />').addClass('forum-pagination bottom');
-			var justAdded = null;
-			for(var i = 1; i <= lastPage; i++) {
-				if(currentPage == i) {
-					justAdded = $('<span />', {
-						text:  i,
-						class: 'page-link current'
-					}).appendTo(newPagination);
-				}
-				else if(i == 1 || i == lastPage || Math.abs(currentPage - i) <= 3) {
-					justAdded = $('<a />', {
-						href: pageBaseUrl + i,
-						text:  i,
-						class: 'page-link'
-					}).appendTo(newPagination);
-				}
-				else if(justAdded) {
-					$('<span />', {
-						text:  '...',
-						class: 'page-gap'
-					}).appendTo(newPagination);
-					justAdded = null;
-				}
-			}
+			var newPagination = $('<div />').addClass('forum-pagination');
+
+			var pages = [1];
+			for(var p = Math.max(currentPage-3, 2); p <= Math.min(currentPage+3, lastPage-1); p++)
+				pages.push(p);
+			if(lastPage != 1) pages.push(lastPage);
+			
+			var last = 0;
+			$.each(pages, function(_, i) {
+				if(i - 1 != last)    $('<span />', { text: '...', class: 'page-gap'                         }).appendTo(newPagination);
+				if(currentPage == i) $('<span />', { text: i,     class: 'page-link current'                }).appendTo(newPagination);
+				else                 $('<a />',    { text: i,     class: 'page-link', href: pageBaseUrl + i }).appendTo(newPagination);
+				
+				last = i;
+			});
+
 			oldPagination.remove();
-			footer = $('<div class="forum-footer forum-navigation bottom"/>');
-			$('#ctl00_cphRoblox_CenterColumn').append(footer.append(newPagination));
+			$('#ctl00_cphRoblox_CenterColumn').append(
+				$('<div class="forum-footer"/>').append(
+					$('<div class="content"/>').append(
+						newPagination
+					)
+				)
+			);
 		}
 	})();
 	
@@ -282,10 +280,12 @@ $(function() {
 		}
 	}
 	else if(location.pathname == '/Forum/ShowForum.aspx') {
+		var threadTable =  $('#ctl00_cphRoblox_ThreadView1_ctl00_ThreadList');
+		threadTable.find('tr:last').remove();
 		$.template("forumTemplate", templates.forum.default);
 		var page = $.tmpl("forumTemplate", {
 			id: $.QueryString['ForumID'],
-			threads: $('#ctl00_cphRoblox_ThreadView1_ctl00_ThreadList').parent().html()
+			threads: threadTable.parent().html()
 		}).replaceAll('#ctl00_cphRoblox_ThreadView1');
 	}
 	
@@ -304,35 +304,9 @@ $(function() {
 	var forumstuff = $('#ctl00_cphRoblox_CenterColumn');
 	forumstuff.children('br, p').remove();
 	
-	if(options.enlargeForum) {
-		forumstuff.remove().contents().appendTo(body.empty());
-	} else
-		forumstuff.siblings().removeAttr('width').filter(function() {return $(this).text().match(/^\s+$/g);}).remove();
-	/*
-	if(options.enlargeForum) {
-		forumstuff = forumstuff.siblings('[id]').andSelf().clone();
+	if(options.enlargeForum) forumstuff.remove().contents().appendTo(body.empty());
+	else forumstuff.siblings().removeAttr('width').filter(function() { return $(this).text().match(/^\s+$/g); }).remove();
 
-		$('div#Body > table').remove();
-
-		forumstuff.each(function() {
-			$('div#Body').append($('<div />')
-				.attr('id', $(this).attr('id'))
-				.append($(this).contents())
-			);
-		})
-
-		var contentElement = $('#ctl00_cphRoblox_PostView1, #ctl00_cphRoblox_ThreadView1');
-		contentElement.find('#ctl00_cphRoblox_ThreadView1_ctl00_Search').parent().remove();
-		
-		var pageContent = $('<div />').attr('id', contentElement.attr('id'));
-		contentElement.find('> table > tbody > tr > td').filter(function() {
-			return $.trim($(this).text()).length > 0;
-		}).each(function() {
-			pageContent.append($('<div />').append($(this).contents()));
-		});
-		contentElement.replaceWith(pageContent);
-		
-		$('#ctl00_cphRoblox_RightColumn, #ctl00_cphRoblox_LeftColumn').hide();
-		console.log("replaced");
-	}*/
+	if(options.removeFooter) $('#Footer').remove();
+	$('body span[style]:last-child').remove(); //Get rid of the strange Group ID which messes up the page.
 }); });

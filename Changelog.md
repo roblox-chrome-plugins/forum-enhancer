@@ -1,9 +1,12 @@
 1.6
 ===
 
-1.6.7
+1.6.8
 -----
  * Fixed bug induced by Roblox changing the template again
+ * Footer now removed by default - can be changed in the options page
+ * Subheading now correctly sticks/slides with page
+ * Pagination optimized - should run faster on large forums now
 
 1.6.6
 -----
