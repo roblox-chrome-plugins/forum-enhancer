@@ -1,6 +1,10 @@
 1.6
 ===
 
+1.6.9
+-----
+ * Fixed critical regression introduced in 1.6.8
+
 1.6.8
 -----
  * Fixed bug induced by Roblox changing the template again

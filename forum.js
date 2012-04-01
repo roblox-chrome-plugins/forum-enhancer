@@ -308,5 +308,5 @@ $(function() {
 	else forumstuff.siblings().removeAttr('width').filter(function() { return $(this).text().match(/^\s+$/g); }).remove();
 
 	if(options.removeFooter) $('#Footer').remove();
-	$('body span[style]:last-child').remove(); //Get rid of the strange Group ID which messes up the page.
+	$('body>span[style]:last-child').remove(); //Get rid of the strange Group ID which messes up the page.
 }); });
