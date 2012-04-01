@@ -159,7 +159,7 @@ $(function() {
 			/** Post list */
 			var thread = Thread.fromListView();
 
-			if(paging.count)
+			if(paging.count > 1)
 				thread.more = true
 
 			$.template("postTemplate", templates.post.default);
