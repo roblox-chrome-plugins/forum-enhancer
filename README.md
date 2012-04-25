@@ -17,9 +17,11 @@ Features
  * Reply button behaviour is fixed, so that it now actually replies to the post you click on.
  * [Markdown] support in forum posts.
 
-
 > WARNING: The Forum Enhancer is not produced or endorsed by Roblox. Normal forum rules still apply. What you type in the textarea is what is posted in the forums. If you break the rules, this is not my problem.
 
+Screenshot
+----------
+![screenshot](http://i.imgur.com/NdlPa.png)
 
 Terms of use
 ------------
