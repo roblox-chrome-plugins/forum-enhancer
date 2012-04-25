@@ -15,7 +15,8 @@ Features
      - Displayed as "5 minutes ago", "yesterday", etc
      - Hover over with mouse to see full date and time
  * Reply button behaviour is fixed, so that it now actually replies to the post you click on.
- * [Markdown] support in forum posts.
+ * [Markdown] support in forum posts
+ * Infinite scrolling of paged threads - hit the bottom of one page, the next loads!
 
 > WARNING: The Forum Enhancer is not produced or endorsed by Roblox. Normal forum rules still apply. What you type in the textarea is what is posted in the forums. If you break the rules, this is not my problem.
 
