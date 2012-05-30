@@ -209,6 +209,23 @@
 	display: block;
 }
 
+.page-indicator {
+	height: 30px;
+	display: table-row;
+}
+.page-indicator div {
+	background: #f0f0f0;
+	text-align: center;
+	font-size: 20px;
+	line-height: 30px;
+	color: #c0c0c0;
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 30px;
+}
+
 /*New post Stuff*/
 
 .reply-form .title {
@@ -243,10 +260,11 @@
 	border:1px solid #c0c0c0;
 }
 .wmd-input { 
-	height: 300px;
 	width: 100%;
 	font-family: monospace;
 	font-size: 12px;
+	resize: vertical;
+	min-height: 400px;
 }
 
 .wmd-preview { 

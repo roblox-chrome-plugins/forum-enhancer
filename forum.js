@@ -163,6 +163,7 @@ $(function() {
 				thread.more = true
 
 			$.template("postTemplate", templates.post.default);
+			$.template("pagenumberTemplate", templates.pagenumber.default);
 			$.template("threadTemplate", templates.thread.default);
 			var page = $.tmpl("threadTemplate", thread)
 			page.replaceAll('#ctl00_cphRoblox_PostView1');
@@ -185,12 +186,13 @@ $(function() {
 			});
 		});
 		if(options.infiniteScroll) {
-			$('.forum-footer').remove();
+			//$('.forum-footer').remove();
 			$(window).scroll(function() {
 				if ($(window).scrollTop() == $(document).height() - $(window).height() && target <= paging.count) {
 					$.get(paging.baseUrl + target++, function(data) {
 						var posts = $('#ctl00_cphRoblox_PostView1_ctl00_PostList', data);
 						posts = Posts.fromListView(posts);
+						$.tmpl("pagenumberTemplate", {n: target - 1}).appendTo('.posts');
 						$.tmpl("postTemplate", posts).appendTo('.posts');
 						if(target > paging.count) $('.loading-more-posts').remove();
 					});
