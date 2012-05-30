@@ -5,7 +5,7 @@ html.RFE #Body {
 }
 html.RFE .tableBorder { border: none !important; }
 html.RFE .forceSpace { display: none; }
-html.RFE .main-content { font-family: Verdana, inherit;}
+html.RFE .main-content { font-family: Verdana, Arial, Helvetica, sans-serif;}
 html.RFE #Header { height: 98px;}
 html.RFE #Header .Navigation { height: auto; overflow: hidden; }
 html.RFE .forum-navigation {
