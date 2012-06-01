@@ -2,7 +2,9 @@ html.RFE #Body {
 	width: auto !important;
 	padding: 0px !important;
 	min-height: 0px !important;
+	background: transparent;
 }
+html.RFE #MasterContainer { background: transparent; }
 html.RFE .tableBorder { border: none !important; }
 html.RFE .forceSpace { display: none; }
 html.RFE .main-content { font-family: Verdana, Arial, Helvetica, sans-serif;}
@@ -92,10 +94,11 @@ html.RFE .forum-navigation form {
 	display: inline; margin: 0; padding: 0;
 }
 html.RFE .forum-footer { height: 30px; }
-@media all and (min-width: 910px) { html.RFE .forum-footer .content { bottom: 0px; position: fixed; z-index: 999; } }/* for fixed footer */
+@media all and (min-width: 910px) {
+	html.RFE .forum-footer .content { bottom: 0px; position: fixed; z-index: 999;}
+}/* for fixed footer */
 html.RFE .forum-footer .content {
 	color: white;
-	overflow: hidden;
 	background: url(chrome-extension://__MSG_@@extension_id__/menu-default.png) repeat-x;
 	width: 100%;
 }
@@ -143,4 +146,20 @@ html.RFE .forumAlternate { background-color: #e0e0ff !important; }*/
 html.RFE .SystemAlert {
 	padding: 0 !important;
 	border: none !important;
+}
+
+/* Text-clipping span*/
+html.RFE body>span[style]:last-child {
+	position: absolute;
+	top: -200%;
+}
+
+#ChatContainer.shifted {
+	position: absolute;
+	bottom: 100%;
+}
+
+#ChatContainer.shifted > div {
+	position: absolute !important;
+	bottom: 0;
 }

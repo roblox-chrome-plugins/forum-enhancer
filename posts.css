@@ -259,7 +259,8 @@
 	width:100%;
 	border:1px solid #c0c0c0;
 }
-.wmd-input { 
+.wmd-input {
+	margin: 0;
 	width: 100%;
 	font-family: monospace;
 	font-size: 12px;

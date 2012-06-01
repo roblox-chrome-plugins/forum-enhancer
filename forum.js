@@ -326,4 +326,11 @@ $(function() {
 
 	if(options.removeFooter) $('#Footer').remove();
 	$('body>span[style]:last-child').remove(); //Get rid of the strange Group ID which messes up the page.
+
+	var footer = $('.forum-footer .content');
+	if(footer) footer.append($('#ChatContainer').addClass('shifted'));
 }); });
+
+setTimeout(function() {
+	console.log(window.fitStringSpan);
+}, 5000);
