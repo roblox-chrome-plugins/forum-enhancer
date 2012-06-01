@@ -43,7 +43,9 @@
 							<span style="width:150px">Author</span>
 							<span>${posts[0].title}</span>
 						</header>
-						{{tmpl(posts) "postTemplate"}}
+						<div class="page" id="page-${page}">
+							{{tmpl(posts) "postTemplate"}}
+						</div>
 					</div>
 					{{if more}}<span class="loading-more-posts">Loading...</a>{{/if}}
 				</div>

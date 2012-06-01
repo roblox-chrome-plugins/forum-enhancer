@@ -158,7 +158,7 @@ $(function() {
 		else {
 			/** Post list */
 			var thread = Thread.fromListView();
-
+			thread.page = paging.at;
 			if(paging.count > 1)
 				thread.more = true
 
@@ -192,8 +192,13 @@ $(function() {
 					$.get(paging.baseUrl + target++, function(data) {
 						var posts = $('#ctl00_cphRoblox_PostView1_ctl00_PostList', data);
 						posts = Posts.fromListView(posts);
-						$.tmpl("pagenumberTemplate", {n: target - 1}).appendTo('.posts');
-						$.tmpl("postTemplate", posts).appendTo('.posts');
+						$('<div/>', {
+							id: 'page-' + (target - 1),
+							'class': 'page'
+						}).append(
+							$.tmpl("pagenumberTemplate", {n: target - 1}),
+							$.tmpl("postTemplate", posts)
+						).appendTo('.posts');
 						if(target > paging.count) $('.loading-more-posts').remove();
 					});
 				}
@@ -325,12 +330,11 @@ $(function() {
 	else forumstuff.siblings().removeAttr('width').filter(function() { return $(this).text().match(/^\s+$/g); }).remove();
 
 	if(options.removeFooter) $('#Footer').remove();
-	$('body>span[style]:last-child').remove(); //Get rid of the strange Group ID which messes up the page.
 
+	//Shift chat up off the footer
 	var footer = $('.forum-footer .content');
 	if(footer) footer.append($('#ChatContainer').addClass('shifted'));
-}); });
 
-setTimeout(function() {
-	console.log(window.fitStringSpan);
-}, 5000);
+	//Fix location.hash scroll failiure
+	$(window).on('hashchange', function() { var e = $(location.hash); if(e) { $(This).scrollTop(e.offset().top - 100); return false; } });
+}); });

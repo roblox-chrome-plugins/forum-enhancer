@@ -59,6 +59,9 @@
 	padding: 10px;
 	text-align: center;
 }
+.posts.old .page {
+	display: table-row-group;
+}
 .posts.old article {
 	background: #DEF;
 	margin: 0px;
