@@ -92,7 +92,7 @@ html.RFE .forum-navigation form {
 	display: inline; margin: 0; padding: 0;
 }
 html.RFE .forum-footer { height: 30px; }
-@media all and (min-width: 910px) { html.RFE .forum-footer .content { bottom: 0px; position: fixed; z-index: 999; } }/* for fixed footer */
+@media all and (min-width: 910px) { html.RFE .forum-footer .content { bottom: 0; left: 0; position: fixed; z-index: 999; } }/* for fixed footer */
 html.RFE .forum-footer .content {
 	color: white;
 	overflow: hidden;
