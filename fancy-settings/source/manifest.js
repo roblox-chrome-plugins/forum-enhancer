@@ -3,7 +3,7 @@ this.manifest = {
 	"name": "Roblox Forum Enhancer",
 	"icon": "../../icon.ico",
 	"settings": [
-		{
+		/*{
 			"tab": "Markdown",
 			"group": "Disable",
 			"name": "disableImages",
@@ -16,7 +16,7 @@ this.manifest = {
 			"name": "disableLinks",
 			"type": "checkbox",
 			"label": "Links"
-		},/*
+		},
 		{
 			"tab": "Markdown",
 			"group": "Custom styles",
