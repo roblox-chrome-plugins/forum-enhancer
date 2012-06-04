@@ -68,9 +68,16 @@ this.manifest = {
 		{
 			"tab": "Forum Appearance",
 			"group": "More options",
-			"name": "infiniteScroll",
+			"name": "removeFooter",
 			"type": "checkbox",
-			"label": "Load more posts at the bottom of the page"
+			"label": "Remove the page footer"
+		},
+		{
+			"tab": "Forum Appearance",
+			"group": "More options",
+			"name": "fixedWidth",
+			"type": "checkbox",
+			"label": "Prevent the page sizing to the width of the screen - limit it to 900px"
 		},
 		{
 			"tab": "Forum Appearance",
