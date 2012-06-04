@@ -68,17 +68,10 @@ this.manifest = {
 		{
 			"tab": "Forum Appearance",
 			"group": "More options",
-			"name": "removeFooter",
-			"type": "checkbox",
-			"label": "Remove the page footer"
-		},
-		{
-			"tab": "Forum Appearance",
-			"group": "More options",
 			"name": "fixedWidth",
 			"type": "checkbox",
 			"label": "Prevent the page sizing to the width of the screen - limit it to 900px"
-		},
+		}/*,
 		{
 			"tab": "Forum Appearance",
 			"group": "Forum Style",
@@ -88,7 +81,7 @@ this.manifest = {
 			"options": [
 				["old", "Standard layout"],
 			]
-		}/*
+		},
 		{
 			"tab": "Forum Appearance",
 			"group": "More options",
