@@ -104,7 +104,10 @@ $(function() {
 			optionsPage: chrome.extension.getURL('fancy-settings/source/index.html')
 		}).appendTo('#Nav');
 		$('.forceSpace').removeAttr('style');
-		document.title = data.map(function(item) { return item.name; }).reverse().join(' | ');
+		var title = document.title = data.map(function(item) { return item.name; }).reverse().join(' | ');
+		var chatfix = document.createElement('script');
+		chatfix.innerHTML = 'setTimeout(function() {ChatBar.PageTitle = '+JSON.stringify(title) + ';}, 200);'
+		document.documentElement.appendChild(chatfix);
 	})();
 
 	var paging = (function makePagination() {
