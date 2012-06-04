@@ -163,3 +163,7 @@ html.RFE body>span[style]:last-child {
 	position: absolute !important;
 	bottom: 0;
 }
+
+#ChatContainer.shifted #friend_dock_minimized_container > div{
+	margin-top:-19px; /* Fix the mouse focus being stolen */
+}
