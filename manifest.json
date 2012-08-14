@@ -19,7 +19,8 @@
 				"highlight.pack.js",
 				"jquery.js",
 				"jquery.tmpl.min.js",
-				"scrape-posts.js",
+				"scraper.js",
+				"pagination.js",
 				"forum.js"
 			],
 			"css": ["forum.css", "posts.css", "threaded.css", "markdown.css", "code.css"],
@@ -27,10 +28,10 @@
 		}
 	],
 	"web_accessible_resources": [
-		"menu-default.png",
-		"menu-hover.png",
-		"breadcrumb.png",
-		"wmd-buttons.png"
+		"images/menu-default.png",
+		"images/menu-hover.png",
+		"images/breadcrumb.png",
+		"images/wmd-buttons.png"
 	],
 	"options_page": "fancy-settings/source/index.html",
 	"background": {"page": "background.html"}

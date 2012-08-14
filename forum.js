@@ -12,31 +12,6 @@
     })(window.location.search.substr(1).split('&'))
 })(jQuery);
 
-function parseRobloxDate(date) {
-	date = $.trim(date);
-	
-	//AM and PM. Date.js, y u no do this for me?
-	date = date.replace(/(\d\d)(:\d\d) (AM|PM)/gi, function(_, hours, rest, ampm) {
-		hours = +hours;
-		if(hours == 12)
-			hours = 0;
-		if(ampm == 'PM')
-			hours += 12;
-		return hours + rest;
-	});
-	
-    /**TODO: Handle time zone being different when logged out. WTF, roblox. */
-	//date += ' -800';
-	date += ' -700';
-	//Today?
-	if(/today @/i.test(date))
-		date = Date.parse(date.replace(/today @/i, ''));
-	else
-		date = Date.parseExact(date, 'MM-dd-yyyy H:mm zzz'); //'dd MMM yyyy HH:mm zzz';
-	
-	return date;
-}
-
 chrome.extension.sendRequest({action: 'all'}, function(data) {
 var options = data.options;
 var templates = data.templates;

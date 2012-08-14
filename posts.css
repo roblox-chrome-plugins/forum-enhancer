@@ -308,7 +308,7 @@
 }
 
 .wmd-button > span {
-	background-image: url(chrome-extension://__MSG_@@extension_id__/wmd-buttons.png);
+	background-image: url(chrome-extension://__MSG_@@extension_id__/images/wmd-buttons.png);
 	
     background-repeat: no-repeat;
     background-position: 0px 0px;
