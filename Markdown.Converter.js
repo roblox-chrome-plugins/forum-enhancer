@@ -104,9 +104,9 @@ else
     Markdown.Converter = function () {
         var pluginHooks = this.hooks = new HookCollection();
         pluginHooks.addNoop("plainLinkText");  // given a URL that was encountered by itself (without markup), should return the link text that's to be given to this link
+        pluginHooks.addNoop("imageRender"); // called with the url of an image. Return false to discard the image.
         pluginHooks.addNoop("preConversion");  // called with the orignal text as given to makeHtml. The result of this plugin hook is the actual markdown source that will be cooked
         pluginHooks.addNoop("postConversion"); // called with the final cooked HTML code. The result of this plugin hook is the actual output of makeHtml
-
         //
         // Private state of the converter instance:
         //
@@ -683,6 +683,9 @@ else
                     return whole_match;
                 }
             }
+
+            //Prevent image rendering for forbidden images
+            url = pluginHooks.imageRender(url);
 
             alt_text = alt_text.replace(/"/g, "&quot;");
             url = escapeCharacters(url, "*_");

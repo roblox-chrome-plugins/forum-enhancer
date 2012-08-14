@@ -3,13 +3,13 @@ this.manifest = {
 	"name": "Roblox Forum Enhancer",
 	"icon": "../../icon.ico",
 	"settings": [
-		/*{
+		{
 			"tab": "Markdown",
 			"group": "Disable",
 			"name": "disableImages",
 			"type": "checkbox",
 			"label": "Images"
-		},
+		},/*,
 		{
 			"tab": "Markdown",
 			"group": "Disable",

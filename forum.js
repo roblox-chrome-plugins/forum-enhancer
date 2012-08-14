@@ -40,6 +40,7 @@ function parseRobloxDate(date) {
 chrome.extension.sendRequest({action: 'all'}, function(data) {
 var options = data.options;
 var templates = data.templates;
+var scraper = new Scraper(options);
 
 var inject = function(code) {
 	var injected = document.createElement('script');
@@ -152,14 +153,10 @@ $(function() {
 		return data
 	})();
 	
-	function getRawText(robloxElem) {
-		return robloxElem.find('br').replaceWith('\n').end().text();
-	}
-
 	if(location.pathname == '/Forum/ShowPost.aspx') {
 		if($.QueryString['View'] == 'Threaded') {
 			/** Threaded view */
-			var thread = Thread.fromThreadedView();
+			var thread = scraper.thread.fromThreadedView();
 			
 			$.template("postTemplate", templates.post.small);
 			$.template("threadTemplate", templates.thread.small);
@@ -167,7 +164,7 @@ $(function() {
 		}
 		else {
 			/** Post list */
-			var thread = Thread.fromListView();
+			var thread = scraper.thread.fromListView();
 			thread.page = paging.at;
 			if(paging.count > 1)
 				thread.more = true
@@ -191,7 +188,7 @@ $(function() {
 			var button = this;
 			$.get(paging.baseUrl + target++, function(data) {
 				var posts = $('#ctl00_cphRoblox_PostView1_ctl00_PostList', data);
-				posts = Posts.fromListView(posts);
+				posts = scraper.posts.fromListView(posts);
 				$.tmpl("postTemplate", posts).insertBefore(button);
 			});
 		});
@@ -201,7 +198,7 @@ $(function() {
 				if ($(window).scrollTop() == $(document).height() - $(window).height() && target <= paging.count) {
 					$.get(paging.baseUrl + target++, function(data) {
 						var posts = $('#ctl00_cphRoblox_PostView1_ctl00_PostList', data);
-						posts = Posts.fromListView(posts);
+						posts = scraper.posts.fromListView(posts);
 						$('<div/>', {
 							id: 'page-' + (target - 1),
 							'class': 'page'
@@ -232,7 +229,9 @@ $(function() {
 				
 			previewContainer.empty().addClass('forum-post').append(
 				$('<div />').addClass('forum-post-heading').append(heading.text()),
-				$('<div />').addClass('forum-post-content').addClass('markdown').append(markdownText(getRawText(message))),
+				$('<div />').addClass('forum-post-content').addClass('markdown').append(
+					scraper.markdownText(scraper.getRawText(message))
+				),
 				$('<div />').addClass('forum-post-actions').append(actions)
 			)
 		}
@@ -242,7 +241,7 @@ $(function() {
 				message: $('#ctl00_cphRoblox_Createeditpost1_PostForm_PostBody').val(),
 				title: $('#ctl00_cphRoblox_Createeditpost1_PostForm_PostSubject').val()
 			}).replaceAll($('#ctl00_cphRoblox_Createeditpost1_PostForm_PostSubject').closest('table'));
-            var editor1 = new Markdown.Editor(converter);
+            var editor1 = new Markdown.Editor(scraper.markdownConverter);
             editor1.run();
 			
 			$(aspnetForm).submit(function() {
@@ -277,7 +276,7 @@ $(function() {
 				var author = $('#ctl00_cphRoblox_Createeditpost1_PostForm_ReplyPostedBy');
 				var date = $('#ctl00_cphRoblox_Createeditpost1_PostForm_ReplyPostedByDate');
 				
-				message = getRawText(message);
+				message = scraper.getRawText(message);
 				if($.QueryString['quote']) {
 					var reply = newPost;
 					reply.val('> '+ message.split('\n').join('\n> ') + '\n\n' + reply.val());
@@ -288,7 +287,7 @@ $(function() {
 						reply.scrollTop(999999);
 					}, 1);
 				}
-				message = markdownText(message)
+				message = scraper.markdownText(message)
 				subject.contents().wrapAll('<span class="normalTextSmallBold" />');
 				
 				lastPostContainer.empty().addClass('forum-post').append(
@@ -328,7 +327,7 @@ $(function() {
 			var dateBox = $(this).find('td').eq(5).find('span');
 			if(dateBox.length == 0) return;
 			
-			var date = parseRobloxDate(dateBox.text().replace(/\s*by\s*/i,''));
+			var date = scraper.getDate(dateBox.text().replace(/\s*by\s*/i,''));
 			
 			if(date) dateBox.empty().append('<time title="'+date+'" datetime="'+date+'">'+prettyDate(date)+'</time><br />');
 		});
