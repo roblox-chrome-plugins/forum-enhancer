@@ -5,7 +5,8 @@ var settings = new Store("settings", {
 	enlargeForum: true,
 	removeFooter: true,
 	infiniteScroll: false,
-	postLayout: 'old'
+	postLayout: 'old',
+	filterImages: 'roblox'
 });
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {

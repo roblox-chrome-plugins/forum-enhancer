@@ -29,10 +29,15 @@ Scraper = function(options) {
 	var $this = this;
 	var converter = this.markdownConverter = Markdown.getSanitizingConverter();
 
-	if(options.disableImages)
-		converter.hooks.chain('imageRender', function() {
+	if(options.filterImages == "all") {
+		converter.hooks.set('imageRender', function() {
 			return "http://t4ak.roblox.com/p1-unapprove-110x110.Jpeg";
 		});
+	} else if (options.filterImages == "roblox") {
+		converter.hooks.set('imageRender', function(url) {
+			return /^http:\/\/(\w+.)roblox.com\//i.test(url) ? url : "http://t4ak.roblox.com/p1-unapprove-110x110.Jpeg";
+		});
+	}
 
 	this.getRawText = function(robloxElem) {
 		return robloxElem.find('br').replaceWith('\n').end().text().replace(/\u200b/g, '');

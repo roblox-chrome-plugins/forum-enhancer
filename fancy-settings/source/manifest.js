@@ -5,10 +5,15 @@ this.manifest = {
 	"settings": [
 		{
 			"tab": "Markdown",
-			"group": "Disable",
-			"name": "disableImages",
-			"type": "checkbox",
-			"label": "Images"
+			"group": "Filter",
+			"name": "filterImages",
+			"type": "radioButtons",
+			"label": "Images",
+			"options": [
+				["none", "Show all images"],
+				["roblox", "Show only images hosted on roblox domains"],
+				["all", "Show no images"]
+			]
 		},/*,
 		{
 			"tab": "Markdown",
