@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 
 	"name": "Roblox Forum Enhancer",
-	"version": "1.7.6",
+	"version": "1.7.7",
 	"description": "Removes ads, changes the page title, tidies the navigation, corrects timezones, and adds markdown to forum posts",
 	"icons": {
 		"48": "icon.ico",
@@ -29,7 +29,8 @@
 	"web_accessible_resources": [
 		"menu-default.png",
 		"menu-hover.png",
-		"breadcrumb.png"
+		"breadcrumb.png",
+		"wmd-buttons.png"
 	],
 	"options_page": "fancy-settings/source/index.html",
 	"background": {"page": "background.html"}
