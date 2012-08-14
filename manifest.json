@@ -1,6 +1,8 @@
 {
+	"manifest_version": 2,
+
 	"name": "Roblox Forum Enhancer",
-	"version": "1.7.5",
+	"version": "1.7.6",
 	"description": "Removes ads, changes the page title, tidies the navigation, corrects timezones, and adds markdown to forum posts",
 	"icons": {
 		"48": "icon.ico",
@@ -24,6 +26,11 @@
 			"run_at" : "document_start"
 		}
 	],
+	"web_accessible_resources": [
+		"menu-default.png",
+		"menu-hover.png",
+		"breadcrumb.png"
+	],
 	"options_page": "fancy-settings/source/index.html",
-	"background_page": "background.html"
+	"background": {"page": "background.html"}
 }
