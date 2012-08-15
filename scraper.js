@@ -39,6 +39,16 @@ Scraper = function(options) {
 		});
 	}
 
+	converter.hooks.chain('postConversion', function(text) {
+		return $('<div>').html(text).find('pre>code').each(function() {
+			var highlighted = hljs.highlightAuto($(this).text());
+			highlighted = highlighted.second_best && highlighted.second_best.language == "lua" ?
+				highlighted.second_best.value :
+				highlighted.value;
+			$(this).html(highlighted);
+		}).end().html();
+	});
+
 	this.getRawText = function(robloxElem) {
 		return robloxElem.find('br').replaceWith('\n').end().text().replace(/\u200b/g, '');
 	};

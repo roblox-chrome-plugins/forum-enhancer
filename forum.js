@@ -151,8 +151,6 @@ $(function() {
 			page.replaceAll('#ctl00_cphRoblox_PostView1');
 
 		}
-		hljs.tabReplace = '    '; // 4 spaces
-		hljs.initHighlighting();
 		var target = paging.at + 1;
 		$('body').delegate('.markdown-toggle', 'click', function() {
 			$('.forum-post .post-info').each(function() {
