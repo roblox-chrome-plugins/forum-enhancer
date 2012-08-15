@@ -4,7 +4,7 @@ var settings = new Store("settings", {
 	disableLinks: false,
 	enlargeForum: true,
 	removeFooter: true,
-	infiniteScroll: false,
+	infiniteScroll: true,
 	postLayout: 'old',
 	filterImages: 'roblox'
 });

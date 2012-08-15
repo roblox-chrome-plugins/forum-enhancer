@@ -66,6 +66,13 @@ this.manifest = {
 		{
 			"tab": "Forum Appearance",
 			"group": "More options",
+			"name": "infiniteScroll",
+			"type": "checkbox",
+			"label": "Load more posts as you scroll the page"
+		},
+		{
+			"tab": "Forum Appearance",
+			"group": "More options",
 			"name": "removeFooter",
 			"type": "checkbox",
 			"label": "Remove the page footer"
