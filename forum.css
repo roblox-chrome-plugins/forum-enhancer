@@ -17,7 +17,7 @@ html.RFE .forum-navigation {
 	overflow:hidden;
 	border: none;
 	text-align: center;
-	background: url(chrome-extension://__MSG_@@extension_id__/menu-default.png);
+	background: url(chrome-extension://__MSG_@@extension_id__/images/menu-default.png);
 	
 }
 html.RFE .forum-navigation ul {
@@ -53,7 +53,7 @@ html.RFE .forum-navigation ul.breadcrumb li a {
 	z-index: 2;
 }
 html.RFE .forum-navigation ul li:hover {
-    background: url(chrome-extension://__MSG_@@extension_id__/menu-hover.png) repeat-x;
+    background: url(chrome-extension://__MSG_@@extension_id__/images/menu-hover.png) repeat-x;
 }
 html.RFE .forum-navigation .breadcrumb li:hover::before,
 html.RFE .forum-navigation .breadcrumb li:hover::after,
@@ -64,7 +64,7 @@ html.RFE .forum-navigation .breadcrumb li::after{
 	width: 15px;
 	right: -5px;
 	top: 0;
-    background-image: url(chrome-extension://__MSG_@@extension_id__/breadcrumb.png);
+    background-image: url(chrome-extension://__MSG_@@extension_id__/images/breadcrumb.png);
 	background-repeat: repeat-x;
 	background-position: 0 0px;
 }
@@ -101,7 +101,7 @@ html.RFE .forum-footer { height: 30px; }
 /* } for fixed footer */
 html.RFE .forum-footer .content {
 	color: white;
-	background: url(chrome-extension://__MSG_@@extension_id__/menu-default.png) repeat-x;
+	background: url(chrome-extension://__MSG_@@extension_id__/images/menu-default.png) repeat-x;
 	width: 100%;
 }
 html.RFE .forum-pagination {
@@ -151,7 +151,7 @@ html.RFE .SystemAlert {
 }
 
 /* Text-clipping span*/
-html.RFE body>span[style]:last-child {
+html.RFE body>span[style]:last-of-type {
 	position: absolute;
 	top: -200%;
 }
