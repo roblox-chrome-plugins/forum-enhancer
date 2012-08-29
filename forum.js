@@ -82,11 +82,15 @@ $(function() {
 		
 		if(location.pathname == '/Forum/User/MyForums.aspx') data.push({name: 'My Forums', href: ''});
 		
-		$.tmpl('navigationTemplate', {
-			breadcrumb: data,
-			optionsPage: chrome.extension.getURL('fancy-settings/source/index.html')
-		}).appendTo('#Nav');
-		$('.forceSpace').removeAttr('style');
+		$('.mySubmenuFixed.Redesign').replaceWith(
+			$.tmpl('navigationTemplate', {
+				breadcrumb: data,
+				optionsPage: chrome.extension.getURL('fancy-settings/source/index.html')
+			})
+		);
+		$('.forceSpaceUnderSubmenu').removeAttr('style').height('65px');
+		$('.forceSpace').remove();
+
 		var title = document.title = data.map(function(item) { return item.name; }).reverse().join(' | ');
 		inject('setTimeout(function() {ChatBar.PageTitle = '+JSON.stringify(title) + ';}, 20);');
 	})();
