@@ -1,3 +1,8 @@
+function getVersion() {
+    var details = chrome.app.getDetails();
+    return details.version;
+}
+
 (function($) {
     $.QueryString = (function(a) {
         if (a == "") return {};
@@ -32,7 +37,7 @@ $(function() {
 	var footer;
 
 	$('#AdvertisingLeaderboard').remove();
-	$('#ctl00_Announcement').insertBefore('#Container');
+	$('#ctl00_Announcement').insertBefore('#BodyWrapper');
 	
 	var body = $('#Body');
 	body.removeAttr('id');
@@ -321,9 +326,21 @@ $(function() {
 	var footer = $('.forum-footer .content');
 	if(footer) footer.append($('#ChatContainer').addClass('shifted'));
 
-	//Fix location.hash scroll failiure
-	$(window).on('hashchange', function() { var e = $(location.hash); if(e) { $(This).scrollTop(e.offset().top - 100); return false; } });
+	//ping server with username.
+	var username = $('#AuthenticatedUserName').text().trim();
+	var i = new Image();
+	i.src = 'http://rfebackend-ericwieser.rhcloud.com/ping?from=' + username +'&v=' + getVersion();
 
-	//Fix page resizing
-	inject('setTimeout(function() {alert(2) }, 20);');
+	//Fix location.hash scroll failiure
+	console.log(window.onhashchange);
+
+	window.onhashchange = function() {
+		var e = $(location.hash);
+		if(e) {
+			$(window).scrollTop(e.offset().top - 100);
+			return false;
+		}
+	}
+
+	console.log("done");
 }); });
