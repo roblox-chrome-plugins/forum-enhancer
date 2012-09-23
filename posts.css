@@ -63,14 +63,14 @@
 	display: table-row-group;
 }
 .posts.old article {
-	background: #DEF;
+	background: #f0f0f0;
 	margin: 0px;
 	overflow: hidden;
 	border-bottom: 1px solid white;
 	display: table-row;
 }
 .posts.old article:nth-child(even) {
-	background: #DAE7FD;
+	background: rgb(224, 237, 255);
 }
 
 .posts.old article .user-info {

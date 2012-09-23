@@ -9,6 +9,11 @@ var settings = new Store("settings", {
 	filterImages: 'roblox'
 });
 
+function getVersion() {
+    var details = chrome.app.getDetails();
+    return details.version;
+}
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	if (request.action == 'getOptions') {
 		sendResponse(settings.toObject());
@@ -39,6 +44,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			toSend[name][theme] = templates[i].innerHTML;
 		}
 		
-		sendResponse({options: settings.toObject(), templates: toSend});
+		sendResponse({options: settings.toObject(), templates: toSend, version: getVersion()});
 	}
 });

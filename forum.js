@@ -1,8 +1,3 @@
-function getVersion() {
-    var details = chrome.app.getDetails();
-    return details.version;
-}
-
 (function($) {
     $.QueryString = (function(a) {
         if (a == "") return {};
@@ -20,6 +15,7 @@ function getVersion() {
 chrome.extension.sendRequest({action: 'all'}, function(data) {
 var options = data.options;
 var templates = data.templates;
+var version = data.version;
 var scraper = new Scraper(options);
 
 var inject = function(code) {
@@ -321,15 +317,19 @@ $(function() {
 	else forumstuff.siblings().removeAttr('width').filter(function() { return $(this).text().match(/^\s+$/g); }).remove();
 
 	if(options.removeFooter) $('#Footer').remove();
-
-	//Shift chat up off the footer
-	var footer = $('.forum-footer .content');
-	if(footer) footer.append($('#ChatContainer').addClass('shifted'));
+	try {
+		//Shift chat up off the footer
+		var footer = $('.forum-footer .content');
+		if(footer.length != 0) footer.append($('#ChatContainer').addClass('shifted'));
+	} catch(e) {
+		window.e = e;
+		console.log(e)
+	}
 
 	//ping server with username.
 	var username = $('#AuthenticatedUserName').text().trim();
 	var i = new Image();
-	i.src = 'http://rfebackend-ericwieser.rhcloud.com/ping?from=' + username +'&v=' + getVersion();
+	i.src = 'http://rfebackend-ericwieser.rhcloud.com/ping?from=' + username +'&v=' + version;
 
 	//Fix location.hash scroll failiure
 	console.log(window.onhashchange);
