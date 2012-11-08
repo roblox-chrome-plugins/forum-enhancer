@@ -67,8 +67,8 @@ Scraper = function(options) {
 		});
 		
 		/**TODO: Handle time zone being different when logged out. WTF, roblox. */
-		//date += ' -800';
-		date += ' -700';
+		date += ' -800';
+		//date += ' -700';
 		//Today?
 		if(/today @/i.test(date))
 			date = Date.parse(date.replace(/today @/i, ''));
