@@ -14,6 +14,12 @@ function getVersion() {
     return details.version;
 }
 
+function getRobloxTimeOffset(cb) {
+	$.get('http://www.roblox.com/Forum/Default.aspx', function(html) {
+		var date = $(html).find('#ctl00_cphRoblox_CenterColumn > table').first().find('span').eq(1).text();
+	})
+}
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	if (request.action == 'getOptions') {
 		sendResponse(settings.toObject());
