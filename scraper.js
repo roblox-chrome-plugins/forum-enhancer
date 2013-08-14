@@ -4,13 +4,13 @@ function prettyDate(date){
 
 	var diff = (((new Date()).getTime() - date.getTime()) / 1000),
 		day_diff = Math.floor(diff / 86400);
-			
+
 	if ( isNaN(day_diff) )
 		return;
 
 	else if(day_diff < 0)
 		return "ERROR!";
-			
+
 	return day_diff == 0 && (
 			diff < 60 && "just now" ||
 			diff < 120 && "1 minute ago" ||
@@ -55,7 +55,7 @@ Scraper = function(options) {
 
 	this.getDate = function(date) {
 		date = $.trim(date);
-		
+
 		//AM and PM. Date.js, y u no do this for me?
 		date = date.replace(/(\d\d)(:\d\d) (AM|PM)/gi, function(_, hours, rest, ampm) {
 			hours = +hours;
@@ -65,7 +65,7 @@ Scraper = function(options) {
 				hours += 12;
 			return hours + rest;
 		});
-		
+
 		/**TODO: Handle time zone being different when logged out. WTF, roblox. */
 		//date += ' -800';
 		date += ' -700';
@@ -74,7 +74,7 @@ Scraper = function(options) {
 			date = Date.parse(date.replace(/today @/i, ''));
 		else
 			date = Date.parseExact(date, 'MM-dd-yyyy H:mm zzz'); //'dd MMM yyyy HH:mm zzz';
-		
+
 		return date;
 	};
 
@@ -85,7 +85,7 @@ Scraper = function(options) {
 			// Turn all line breaks into markup format for backwards compatibility
 			// TODO: Add special character to distinguish markdown posts
 			.replace(/\n([^\n])/g, '  \n$1');
-			
+
 		return converter.makeHtml(plainText);
 	};
 
@@ -96,8 +96,7 @@ Scraper = function(options) {
 				.slice(2, -1) //Exclude headers and footer
 				.map(function() {
 					var data = {};
-					
-					
+
 					var userContainer = $(this).children('td').eq(0);
 					var rows = userContainer.find('td');
 					data.user = {
@@ -105,12 +104,12 @@ Scraper = function(options) {
 						online:  /online/i.test(rows.eq(0).find('img').attr('src')),
 						details: rows.filter(function(i) {return i > 1 && !$(this).html().match('&nbsp;') }).map(function() { return $(this).html(); }).get()
 					};
-					
-					
+
+
 					var info = $(this).children('td').eq(1).find('td');
 					var heading = info.eq(0);
-					
-					
+
+
 					data.id            = +heading.find('a').attr('name');
 					data.locked        = info.eq(4).find('a[href^="/Forum/AddPost.aspx"]').size() == 0;
 					data.title         = heading.children('span').eq(0).text();
@@ -120,11 +119,11 @@ Scraper = function(options) {
 
 					data.content       = $this.getRawText(info.eq(1).children('span'));
 					data.markedContent = $this.markdownText(data.content);
-					
+
 					var tryParse       = $this.getDate(data.date);
 					data.date          = tryParse || data.date;
 					data.dateString    = tryParse ? prettyDate(tryParse) : tryParse; //data.date.toString('dd MMM yyyy @ hh:mm tt'); //
-					
+
 					return data;
 				})
 				.get()
@@ -164,7 +163,7 @@ Scraper = function(options) {
 					var tryParse = $this.getDate(data.date);
 					data.date = tryParse || data.date;
 					data.dateString = tryParse ? prettyDate(tryParse) : tryParse; //data.date.toString('dd MMM yyyy @ hh:mm tt'); //
-					
+
 					return data;
 				}
 				else {

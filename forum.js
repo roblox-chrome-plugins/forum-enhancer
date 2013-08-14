@@ -29,23 +29,23 @@ $(function() {
 	if(options.fixedWidth) $('html').addClass('fixed-width');
 	var submenu;
 	var breadcrumb;
-	
+
 	var footer;
 
 	$('#AdvertisingLeaderboard').remove();
 	$('#ctl00_Announcement').insertBefore('#BodyWrapper');
-	
+
 	var body = $('#Body');
 	body.removeAttr('id');
 	$(window).load(function() { setTimeout(function() { body.attr('id', 'Body'); }, 1) });
-	
+
 	(function makeNavigation() {
 		$('#SmallHeaderContainer').prependTo('#Header');
 		$.template("navigationTemplate", templates.navigation.default);
-		
+
 		//Remove navigation
 		$('span#ctl00_cphRoblox_NavigationMenu2').add('span#ctl00_cphRoblox_Navigationmenu1').remove();
-		
+
 		//Get one breadcrumb, remove the rest
 		var breadcrumb = $('#ctl00_cphRoblox_Whereami1')
 			.add('#ctl00_cphRoblox_ThreadView1_ctl00_Whereami1')
@@ -60,10 +60,10 @@ $(function() {
 			.add('#ctl00_cphRoblox_Createeditpost1_PostForm_Whereami2')
 			.add('#ctl00_cphRoblox_MyForums1_ctl00_Whereami2')
 			.remove().first();
-			
-		
+
+
 		var data = [];
-		
+
 		if(breadcrumb.length == 0) {
 			data.push({name: 'Roblox Forum', href: 'http://www.roblox.com/Forum/Default.aspx'});
 		}
@@ -76,13 +76,13 @@ $(function() {
 				var maxLength = 40;
 				if(item.name.length > maxLength)
 					item.name = item.name.substring(0, maxLength - 3) + '...';
-				
+
 				return item;
 			}).get();
 		}
-		
+
 		if(location.pathname == '/Forum/User/MyForums.aspx') data.push({name: 'My Forums', href: ''});
-		
+
 		$('.mySubmenuFixed.Redesign').replaceWith(
 			$.tmpl('navigationTemplate', {
 				breadcrumb: data,
@@ -95,7 +95,7 @@ $(function() {
 		var title = document.title = data.map(function(item) { return item.name; }).reverse().join(' | ');
 		inject('setTimeout(function() {ChatBar.PageTitle = '+JSON.stringify(title) + ';}, 20);');
 	})();
-	
+
 	inject('setTimeout(function() {annoyingResize = $(window).data(\'events\').resize[0].handler; $(window).off(\'resize\', annoyingResize); }, 20);');
 
 	var paging = (function makePagination() {
@@ -117,8 +117,8 @@ $(function() {
 				data.count = +info[2].replace(/,/g, '');
 				elem.remove();
 				return false;
-			}				
-		});	
+			}
+		});
 		if(data.count) {
 			pagination = Pagination(data.at, data.count, data.baseUrl);
 
@@ -132,12 +132,12 @@ $(function() {
 		}
 		return data
 	})();
-	
+
 	if(location.pathname == '/Forum/ShowPost.aspx') {
 		if($.QueryString['View'] == 'Threaded') {
 			/** Threaded view */
 			var thread = scraper.thread.fromThreadedView();
-			
+
 			$.template("postTemplate", templates.post.small);
 			$.template("threadTemplate", templates.thread.small);
 			var page = $.tmpl("threadTemplate", thread).replaceAll('#ctl00_cphRoblox_PostView1');
@@ -199,12 +199,12 @@ $(function() {
 		var preview = $('#ctl00_cphRoblox_Createeditpost1_PostForm_Preview').size() > 0;
 		if(preview) {
 			var previewContainer = page.children('tbody').children('tr').eq(1).children('td').first();
-			
+
 			var heading = $('#ctl00_cphRoblox_Createeditpost1_PostForm_PreviewSubject');
 			var message = $('#ctl00_cphRoblox_Createeditpost1_PostForm_PreviewBody');
 			var actions = $('#ctl00_cphRoblox_Createeditpost1_PostForm_BackButton')
 				.add('#ctl00_cphRoblox_Createeditpost1_PostForm_PreviewPostButton');
-				
+
 			previewContainer.empty().addClass('forum-post').append(
 				$('<div />').addClass('forum-post-heading').append(heading.text()),
 				$('<div />').addClass('forum-post-content').addClass('markdown').append(
@@ -221,7 +221,7 @@ $(function() {
 			}).replaceAll($('#ctl00_cphRoblox_Createeditpost1_PostForm_PostSubject').closest('table'));
             var editor1 = new Markdown.Editor(scraper.markdownConverter);
             editor1.run();
-			
+
 			$(aspnetForm).submit(function() {
 				var message = $(editor1.panels.input);
 				var text = message.val().split('\n').map(function(line) {
@@ -243,22 +243,22 @@ $(function() {
 				}).join('\n').replace(/\<(?=[\/\w])/g, '<\u200b').replace(/([" \/])>/g, '$1\u200b>');
 				message.val(text);
 			});
-			
+
 			if($.QueryString['PostID']) {
 				//New Post
-				
+
 				var lastPostContainer = page.children('tbody').children('tr').eq(1).children('td').first();
-				
+
 				var message = $('#ctl00_cphRoblox_Createeditpost1_PostForm_ReplyBody');
 				var subject = $('#ctl00_cphRoblox_Createeditpost1_PostForm_ReplySubject');
 				var author = $('#ctl00_cphRoblox_Createeditpost1_PostForm_ReplyPostedBy');
 				var date = $('#ctl00_cphRoblox_Createeditpost1_PostForm_ReplyPostedByDate');
-				
+
 				message = scraper.getRawText(message);
 				if($.QueryString['quote']) {
 					var reply = newPost;
 					reply.val('> '+ message.split('\n').join('\n> ') + '\n\n' + reply.val());
-					
+
 					setTimeout(function() {
 						reply.focus();
 						reply.get(0).setSelectionRange(reply.val().length, reply.val().length);
@@ -267,7 +267,7 @@ $(function() {
 				}
 				message = scraper.markdownText(message)
 				subject.contents().wrapAll('<span class="normalTextSmallBold" />');
-				
+
 				lastPostContainer.empty().addClass('forum-post').append(
 					$('<div />').addClass('forum-post-heading').append(
 						subject,
@@ -297,22 +297,22 @@ $(function() {
 			threads: threadTable.parent().html()
 		}).replaceAll('#ctl00_cphRoblox_ThreadView1');
 	}
-	
+
 	$('#ctl00_cphRoblox_ThreadView1_ctl00_ThreadList')
 		.add('#ctl00_cphRoblox_MyForums1_ctl00_ParticipatedThreads')
 		.add('#ctl00_cphRoblox_MyForums1_ctl00_ThreadTracking')
 		.find('tr').each(function() {
 			var dateBox = $(this).find('td').eq(5).find('span');
 			if(dateBox.length == 0) return;
-			
+
 			var date = scraper.getDate(dateBox.text().replace(/\s*by\s*/i,''));
-			
+
 			if(date) dateBox.empty().append('<time title="'+date+'" datetime="'+date+'">'+prettyDate(date)+'</time><br />');
 		});
-		
+
 	var forumstuff = $('#ctl00_cphRoblox_CenterColumn');
 	forumstuff.children('br, p').remove();
-	
+
 	if(options.enlargeForum) forumstuff.remove().contents().appendTo(body.empty());
 	else forumstuff.siblings().removeAttr('width').filter(function() { return $(this).text().match(/^\s+$/g); }).remove();
 
