@@ -9,7 +9,6 @@ html.RFE.fixed-width #BodyWrapper {max-width: 900px;}
 html.RFE #MasterContainer { background: transparent; }
 html.RFE .tableBorder { border: none !important; }
 html.RFE .forceSpace { display: none; }
-html.RFE .main-content { font-family: Verdana, Arial, Helvetica, sans-serif;}
 html.RFE #Header { height: 98px;}
 html.RFE #Header .Navigation { height: auto; overflow: hidden; }
 html.RFE .forum-navigation {
