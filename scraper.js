@@ -92,8 +92,7 @@ Scraper = function(options) {
 	this.posts = {
 		fromListView: function(table) {
 			return (
-			table.children('tbody').children()
-				.slice(2, -1) //Exclude headers and footer
+			table.children('tbody').children('.forum-post')
 				.map(function() {
 					var data = {};
 
