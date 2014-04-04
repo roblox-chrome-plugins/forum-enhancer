@@ -81,7 +81,10 @@ $(function() {
 			}).get();
 		}
 
-		if(location.pathname == '/Forum/User/MyForums.aspx') data.push({name: 'My Forums', href: ''});
+		if(location.pathname == '/Forum/User/MyForums.aspx')
+			data.push({name: 'My Forums', href: ''});
+		if(location.pathname == '/Forum/ShowPost.aspx')
+			data.push({name: $('#ctl00_cphRoblox_PostView1_ctl00_PostTitle').text(), href: ''});
 
 		$('.mySubmenuFixed.Redesign').replaceWith(
 			$.tmpl('navigationTemplate', {

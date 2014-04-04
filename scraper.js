@@ -110,8 +110,8 @@ Scraper = function(options) {
 
 
 					data.id            = +heading.find('a').attr('name');
-					data.locked        = info.eq(4).find('a[href^="/Forum/AddPost.aspx"]').size() == 0;
-					data.title         = heading.children('span').eq(0).text();
+					data.locked        = info.find('a[href^="/Forum/AddPost.aspx"]').size() == 0;
+
 					//data.date          = $.trim(heading.find('a span').eq(1).text());
 					data.date          = $.trim(heading.find('span').last().text());
 					data.ownerPage     = location.href;
@@ -133,6 +133,7 @@ Scraper = function(options) {
 	this.thread = {
 		fromListView: function() {
 			return {
+				title: $('#ctl00_cphRoblox_PostView1_ctl00_PostTitle').text(),
 				posts: $this.posts.fromListView($('#ctl00_cphRoblox_PostView1_ctl00_PostList')),
 				tracked: $('#ctl00_cphRoblox_PostView1_ctl00_TrackThread').prop('checked')
 			};

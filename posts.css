@@ -120,13 +120,14 @@
 
 .posts.old article .post-info header {
 	padding: 5px;
-	border-bottom: 1px solid white;
 	overflow: hidden;
+	float: right;
 }
 .posts.old article .post-info header .title {
 	font-weight: bold;
 }
 .posts.old article .post-info header time {
+	color: #808080;
 	float: right;
 }
 .posts.old article .post-info .content {
@@ -145,8 +146,11 @@
 }
 .posts.old article .post-info footer .report {
 	float: right;
-	display: block;
+	display: none;
 	padding: 5px;
+}
+.posts.old article:hover .post-info footer .report {
+	display: block;
 }
 .posts.old article .post-info footer .reply span { margin-top: -4px; }
 .posts.old article .post-info footer .quote span { margin-bottom: -4px; }

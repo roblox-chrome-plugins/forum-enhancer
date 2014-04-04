@@ -38,11 +38,8 @@
 						</a>
 						<a href="javascript:void(0)" class="button markdown-toggle right">Toggle Markdown</a>
 					</div>
+					<h2 style="padding: 5px">${title}</h2>
 					<div class="posts old">
-						<header>
-							<span style="width:150px">Author</span>
-							<span>${posts[0].title}</span>
-						</header>
 						<div class="page" id="page-${page}">
 							{{tmpl(posts) "postTemplate"}}
 						</div>
@@ -66,7 +63,6 @@
 					</section>
 					<section class="post-info">
 						<header>
-							<span class="title">${title}</span>
 							<time datetime="${date}" title="${date}" pubdate>${dateString}</time>
 						</header>
 						<div class="content markdown">
